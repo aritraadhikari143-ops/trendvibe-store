@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TrendVibe Store | Premium Aesthetic Drops & Tech Gear</title>
     
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="GjkDVxlF89ErQQna7F4b9hooM-_l5DV1UcBBQlpfTKM" />
+    <meta name="description" content="Shop viral minimalist jewelry, smart pocket gadgets, and aesthetic streetwear drops. Free Express Shipping, UPI & Cash on Delivery across India.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -963,7 +967,6 @@
             alert("Admin signed out.");
         }
 
-        /* Async Single Image Compressor Promise */
         function compressSingleImageFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -971,7 +974,7 @@
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 380; // Optimized size for high performance & safe storage
+                        const MAX_WIDTH = 380;
                         const scale = MAX_WIDTH / img.width;
                         canvas.width = MAX_WIDTH;
                         canvas.height = img.height * scale;
@@ -990,7 +993,6 @@
             });
         }
 
-        /* Guaranteed Async Processing Pipeline */
         async function processGalleryPhotos(e) {
             const files = Array.from(e.target.files);
             const statusLabel = document.getElementById('galleryUploadStatus');
@@ -1138,7 +1140,6 @@
 
                 localStorage.setItem('tv_inventory', JSON.stringify(products));
 
-                // Clear input fields
                 document.getElementById('admName').value = '';
                 document.getElementById('admDesc').value = '';
                 document.getElementById('admBadge').value = '';
@@ -1304,7 +1305,6 @@
             }
         }
 
-        /* 100% Automated WhatsApp Invoice Flow */
         function executeWhatsAppCheckout() {
             if (cart.length === 0) {
                 alert("Your cart is empty!");
@@ -1338,7 +1338,6 @@
             window.open(waUrl, '_blank');
         }
 
-        /* Direct UPI Payment Intent Protocol */
         function executeUpiDirectPay() {
             if (cart.length === 0) {
                 alert("Your cart is empty!");
@@ -1357,4 +1356,4 @@
         syncCartState();
     </script>
 </body>
-  </html>
+        </html>
