@@ -476,6 +476,45 @@
             color: var(--text-head);
         }
 
+        /* Size Selector Styling */
+        .size-selector-block {
+            margin: 14px 0;
+            display: none;
+        }
+
+        .size-selector-block label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .size-pills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .size-pill-btn {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-pill-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
         .modal-details-body p.desc {
             font-size: 0.85rem;
             line-height: 1.5;
@@ -560,6 +599,17 @@
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-head);
+            margin-bottom: 2px;
+        }
+
+        .cart-item-size-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(56, 189, 248, 0.12);
+            padding: 2px 6px;
+            border-radius: 4px;
             margin-bottom: 4px;
         }
 
@@ -666,6 +716,26 @@
             color: #ffffff;
             font-size: 0.85rem;
             outline: none;
+        }
+
+        .admin-sizes-checkbox-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: var(--bg-base);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .admin-sizes-checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-body);
+            margin-bottom: 0;
+            cursor: pointer;
         }
 
         .gallery-upload-card {
@@ -793,7 +863,7 @@
         <button class="filter-chip active" onclick="applyCategoryFilter('all', this)">All Drops 🔥</button>
         <button class="filter-chip" onclick="applyCategoryFilter('jewelry', this)">Aesthetic Jewelry 💍</button>
         <button class="filter-chip" onclick="applyCategoryFilter('gadgets', this)">Mini Gadgets ⚡</button>
-        <button class="filter-chip" onclick="applyCategoryFilter('fashion', this)">Streetwear 👕</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('fashion', this)">Streetwear & Fashion 👗</button>
     </div>
 
     <!-- Admin Console -->
@@ -805,7 +875,7 @@
         
         <div class="admin-form-group">
             <label>Product Title *</label>
-            <input type="text" id="admName" placeholder="e.g. Minimalist Titanium Cuban Chain">
+            <input type="text" id="admName" placeholder="e.g. GoSriKi Printed Anarkali Kurta Set">
         </div>
 
         <div class="admin-form-group">
@@ -829,32 +899,44 @@
         </div>
 
         <div class="admin-form-group">
-            <label>Product Description & Highlights *</label>
-            <textarea id="admDesc" rows="3" placeholder="Material, sizing, packaging inclusions, key features..."></textarea>
+            <label>Department Category *</label>
+            <select id="admCategory">
+                <option value="fashion">Streetwear & Fashion 👗</option>
+                <option value="gadgets">Mini Gadgets ⚡</option>
+                <option value="jewelry">Aesthetic Jewelry 💍</option>
+            </select>
+        </div>
+
+        <!-- Available Sizes selection for Clothing -->
+        <div class="admin-form-group">
+            <label>Available Sizes (Tick if clothing/dress, leave blank for gadgets):</label>
+            <div class="admin-sizes-checkbox-row">
+                <label><input type="checkbox" name="admSizes" value="S"> S</label>
+                <label><input type="checkbox" name="admSizes" value="M"> M</label>
+                <label><input type="checkbox" name="admSizes" value="L"> L</label>
+                <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
+                <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+            </div>
         </div>
 
         <div class="admin-form-group">
-            <label>Department Category *</label>
-            <select id="admCategory">
-                <option value="jewelry">Aesthetic Jewelry 💍</option>
-                <option value="gadgets">Mini Gadgets ⚡</option>
-                <option value="fashion">Streetwear 👕</option>
-            </select>
+            <label>Product Description & Highlights *</label>
+            <textarea id="admDesc" rows="3" placeholder="Fabric, fitting, care instructions, key highlights..."></textarea>
         </div>
 
         <div class="admin-form-group">
             <label>Promotional Badge</label>
-            <input type="text" id="admBadge" placeholder="e.g. Bestseller 🔥 / 50% OFF / Viral Drop">
+            <input type="text" id="admBadge" placeholder="e.g. Festive Drop ✨ / Bestseller 🔥">
         </div>
 
         <div style="display:flex; gap:10px;">
             <div class="admin-form-group" style="flex:1;">
                 <label>Offer Price (₹) *</label>
-                <input type="number" id="admPrice" placeholder="399">
+                <input type="number" id="admPrice" placeholder="499">
             </div>
             <div class="admin-form-group" style="flex:1;">
                 <label>Original MRP (₹) *</label>
-                <input type="number" id="admOrigPrice" placeholder="799">
+                <input type="number" id="admOrigPrice" placeholder="999">
             </div>
         </div>
 
@@ -864,7 +946,7 @@
     <!-- Product Showcase -->
     <main class="catalog-container" id="productShowcaseGrid"></main>
 
-    <!-- Product Quick View Modal -->
+    <!-- Product Quick View Modal with Size Selection -->
     <div class="item-modal-backdrop" id="productViewModal" onclick="closeProductModal(event)">
         <div class="item-modal-box">
             <button class="modal-close-ico" onclick="closeProductModal(null, true)">&times;</button>
@@ -881,6 +963,13 @@
                     <span class="price-mrp" id="modalMrp"></span>
                     <span class="price-discount" id="modalDiscount"></span>
                 </div>
+
+                <!-- Modal Size Selector -->
+                <div class="size-selector-block" id="modalSizeBlock">
+                    <label>Select Your Size (Required):</label>
+                    <div class="size-pills-row" id="modalSizePills"></div>
+                </div>
+
                 <div style="font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:4px;">Product Highlights:</div>
                 <p class="desc" id="modalDesc"></p>
                 <div class="btn-card-group" id="modalActions"></div>
@@ -930,6 +1019,9 @@
         let searchQuery = '';
         let galleryCompressedImages = [];
         let isProcessingPhotos = false;
+        let selectedProductModalSize = null;
+        let currentModalProductIndex = null;
+
         let cart = JSON.parse(localStorage.getItem('tv_cart')) || [];
         let products = JSON.parse(localStorage.getItem('tv_inventory')) || [];
         let isAdminLoggedIn = sessionStorage.getItem('tv_admin_session') === 'active';
@@ -1077,8 +1169,8 @@
                         </div>
                         <div class="btn-card-group">
                             <button class="btn-view-item" onclick="viewProductModal(${idx})">View Details 🔍</button>
-                            <button class="btn-add-cart" onclick="addToCartByIndex(${idx})">+ Add to Cart</button>
-                            <button class="btn-buy-instant" onclick="buyNowInstant(${idx})">Buy Now</button>
+                            <button class="btn-add-cart" onclick="quickAddToCart(${idx})">+ Add to Cart</button>
+                            <button class="btn-buy-instant" onclick="viewProductModal(${idx})">Buy Now</button>
                             ${isAdminLoggedIn ? `<button class="btn-delete-card" onclick="removeProductByIndex(${idx})">🗑 Delete Listing</button>` : ''}
                         </div>
                     </div>
@@ -1099,6 +1191,9 @@
             const badge = document.getElementById('admBadge').value.trim();
             const price = parseFloat(document.getElementById('admPrice').value);
             const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
+
+            // Get selected size pills from Admin
+            const selectedSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
 
             const webLinks = [
                 document.getElementById('img1').value.trim(),
@@ -1133,6 +1228,7 @@
                     images: combinedImages,
                     desc: desc,
                     category,
+                    sizes: selectedSizes, // Array of sizes e.g. ['S', 'M', 'L']
                     badge: badge || "Hot Drop 🔥",
                     price,
                     origPrice
@@ -1153,12 +1249,13 @@
                 document.getElementById('img3').value = '';
                 document.getElementById('img4').value = '';
                 document.getElementById('img5').value = '';
+                document.querySelectorAll('input[name="admSizes"]').forEach(cb => cb.checked = false);
                 galleryCompressedImages = [];
 
                 renderCatalog();
-                alert("Product successfully published to TrendVibe Store!");
+                alert("Product successfully published with Sizes to TrendVibe Store!");
             } catch (err) {
-                alert("Local storage capacity full. Please delete 1 or 2 old products to make space!");
+                alert("Storage limit reached. Please remove 1 old product to free up space!");
             }
         }
 
@@ -1171,6 +1268,8 @@
         }
 
         function viewProductModal(index) {
+            currentModalProductIndex = index;
+            selectedProductModalSize = null;
             const item = products[index];
             const discount = Math.round(((item.origPrice - item.price) / item.origPrice) * 100);
             const imgList = (item.images && item.images.length > 0) ? item.images : [item.img || ''];
@@ -1183,6 +1282,7 @@
             document.getElementById('modalDiscount').innerText = `${discount}% OFF`;
             document.getElementById('modalDesc').innerText = item.desc || "Verified quality product with free express home delivery across India.";
 
+            // Thumbnails
             const thumbsContainer = document.getElementById('modalThumbnails');
             thumbsContainer.innerHTML = '';
             imgList.forEach((src, i) => {
@@ -1197,10 +1297,37 @@
                 thumbsContainer.appendChild(thumb);
             });
 
+            // Size Selector Setup
+            const sizeBlock = document.getElementById('modalSizeBlock');
+            const sizePillsContainer = document.getElementById('modalSizePills');
+            sizePillsContainer.innerHTML = '';
+
+            if (item.sizes && item.sizes.length > 0) {
+                sizeBlock.style.display = 'block';
+                // Select first size by default
+                selectedProductModalSize = item.sizes[0];
+
+                item.sizes.forEach((sz, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `size-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.innerText = sz;
+                    btn.onclick = function() {
+                        selectedProductModalSize = sz;
+                        document.querySelectorAll('.size-pill-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    };
+                    sizePillsContainer.appendChild(btn);
+                });
+            } else {
+                sizeBlock.style.display = 'none';
+                selectedProductModalSize = null;
+            }
+
             const actionsBox = document.getElementById('modalActions');
             actionsBox.innerHTML = `
-                <button class="btn-add-cart" onclick="addToCartByIndex(${index}); closeProductModal(null, true);">+ Add to Cart</button>
-                <button class="btn-buy-instant" onclick="buyNowInstant(${index}); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
+                <button class="btn-add-cart" onclick="confirmAddToCartFromModal(); closeProductModal(null, true);">+ Add to Cart</button>
+                <button class="btn-buy-instant" onclick="confirmBuyNowFromModal(); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
             `;
 
             document.getElementById('productViewModal').style.display = 'block';
@@ -1210,6 +1337,49 @@
             if (force || (e && e.target.id === 'productViewModal')) {
                 document.getElementById('productViewModal').style.display = 'none';
             }
+        }
+
+        function quickAddToCart(index) {
+            const item = products[index];
+            if (item.sizes && item.sizes.length > 0) {
+                // If item has sizes, open modal to let user pick size
+                viewProductModal(index);
+            } else {
+                addItemToCartInternal(item, null);
+                toggleCartDrawer(true);
+            }
+        }
+
+        function confirmAddToCartFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = products[currentModalProductIndex];
+            addItemToCartInternal(item, selectedProductModalSize);
+            toggleCartDrawer(true);
+        }
+
+        function confirmBuyNowFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = products[currentModalProductIndex];
+            addItemToCartInternal(item, selectedProductModalSize);
+            toggleCartDrawer(true);
+        }
+
+        function addItemToCartInternal(item, chosenSize) {
+            const primaryImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
+            const existing = cart.find(c => c.name === item.name && c.selectedSize === chosenSize);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    name: item.name,
+                    price: item.price,
+                    img: primaryImg,
+                    selectedSize: chosenSize,
+                    qty: 1
+                });
+            }
+            syncCartState();
         }
 
         function applyCategoryFilter(cat, elem) {
@@ -1222,23 +1392,6 @@
         function handleLiveSearch() {
             searchQuery = document.getElementById('storeSearchInput').value.trim();
             renderCatalog();
-        }
-
-        function addToCartByIndex(index) {
-            const item = products[index];
-            const existing = cart.find(c => c.name === item.name);
-            const primaryImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ ...item, img: primaryImg, qty: 1 });
-            }
-            syncCartState();
-            toggleCartDrawer(true);
-        }
-
-        function buyNowInstant(index) {
-            addToCartByIndex(index);
         }
 
         function updateCartQty(index, delta) {
@@ -1278,7 +1431,8 @@
                     <img src="${item.img}" alt="${item.name}">
                     <div class="cart-item-info">
                         <h5>${item.name}</h5>
-                        <span style="font-size:0.75rem; color:var(--primary); font-weight:700;">₹${item.price} each</span>
+                        ${item.selectedSize ? `<span class="cart-item-size-badge">Size: ${item.selectedSize}</span>` : ''}
+                        <div style="font-size:0.75rem; color:var(--primary); font-weight:700;">₹${item.price} each</div>
                         <div class="cart-qty-ctrl">
                             <button class="qty-btn" onclick="updateCartQty(${i}, -1)">-</button>
                             <span style="font-size:0.8rem; font-weight:700;">${item.qty}</span>
@@ -1320,7 +1474,8 @@
             cart.forEach(c => {
                 const sub = c.price * c.qty;
                 total += sub;
-                itemsText += `• ${c.name} (Qty: ${c.qty}) - ₹${sub}\n`;
+                const sizeTag = c.selectedSize ? ` [Size: ${c.selectedSize}]` : '';
+                itemsText += `• ${c.name}${sizeTag} (Qty: ${c.qty}) - ₹${sub}\n`;
             });
 
             let message = `*NEW ORDER - TRENDVIBE STORE*\n`;
@@ -1356,4 +1511,4 @@
         syncCartState();
     </script>
 </body>
-        </html>
+                </html>
