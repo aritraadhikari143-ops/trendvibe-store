@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TrendVibe Store | Premium Aesthetic Drops & Tech Gear</title>
     
-    <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="GjkDVxlF89ErQQna7F4b9hooM-_l5DV1UcBBQlpfTKM" />
     <meta name="description" content="Shop viral minimalist jewelry, smart pocket gadgets, and aesthetic streetwear drops. Free Express Shipping, UPI & Cash on Delivery across India.">
     
@@ -503,13 +502,13 @@
             color: var(--text-head);
         }
 
-        /* Size Selector Styling */
-        .size-selector-block {
-            margin: 14px 0;
+        /* Variant Selectors (Size & Color) */
+        .variant-selector-block {
+            margin: 12px 0;
             display: none;
         }
 
-        .size-selector-block label {
+        .variant-selector-block label {
             display: block;
             font-size: 0.8rem;
             font-weight: 700;
@@ -517,17 +516,17 @@
             margin-bottom: 8px;
         }
 
-        .size-pills-row {
+        .variant-pills-row {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
 
-        .size-pill-btn {
+        .variant-pill-btn {
             background: var(--surface-elevated);
             border: 1px solid var(--border);
             color: var(--text-body);
-            padding: 7px 16px;
+            padding: 7px 14px;
             border-radius: 8px;
             font-size: 0.82rem;
             font-weight: 700;
@@ -535,7 +534,7 @@
             transition: all 0.2s;
         }
 
-        .size-pill-btn.active {
+        .variant-pill-btn.active {
             background: var(--primary);
             color: #000;
             border-color: var(--primary);
@@ -629,14 +628,15 @@
             margin-bottom: 2px;
         }
 
-        .cart-item-size-badge {
+        .cart-badge-tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--primary);
             background: rgba(56, 189, 248, 0.12);
             padding: 2px 6px;
             border-radius: 4px;
+            margin-right: 4px;
             margin-bottom: 4px;
         }
 
@@ -753,6 +753,7 @@
             padding: 10px 14px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
+            margin-bottom: 8px;
         }
 
         .admin-sizes-checkbox-row label {
@@ -931,7 +932,7 @@
 
         <div class="admin-form-group">
             <label>Product Title *</label>
-            <input type="text" id="admName" placeholder="e.g. GoSriKi Printed Anarkali Kurta Set">
+            <input type="text" id="admName" placeholder="e.g. Latest Pink Bridal Chooda Set for Women">
         </div>
 
         <div class="admin-form-group">
@@ -958,13 +959,20 @@
             <label>Department Category *</label>
             <select id="admCategory">
                 <option value="fashion">Streetwear & Fashion 👗</option>
-                <option value="gadgets">Mini Gadgets ⚡</option>
                 <option value="jewelry">Aesthetic Jewelry 💍</option>
+                <option value="gadgets">Mini Gadgets ⚡</option>
             </select>
         </div>
 
+        <!-- NEW: Color Options Input -->
         <div class="admin-form-group">
-            <label>Available Sizes (Tick if clothing, leave blank for gadgets):</label>
+            <label>🎨 Available Colors (Comma separated, e.g. Pink, White, Yellow, Green, Black):</label>
+            <input type="text" id="admColors" placeholder="Pink, White, Yellow, Green, Black">
+        </div>
+
+        <!-- NEW & FLEXIBLE: Sizes Input -->
+        <div class="admin-form-group">
+            <label>📏 Standard Clothing Sizes (Tick if applicable):</label>
             <div class="admin-sizes-checkbox-row">
                 <label><input type="checkbox" name="admSizes" value="S"> S</label>
                 <label><input type="checkbox" name="admSizes" value="M"> M</label>
@@ -972,9 +980,10 @@
                 <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
                 <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
             </div>
+            <label style="margin-top:6px;">Or Custom Sizes (For Bangles, Shoes, etc. e.g. 2.4, 2.6, 2.8):</label>
+            <input type="text" id="admCustomSizes" placeholder="2.4, 2.6, 2.8">
         </div>
 
-        <!-- Sold Out Toggle Checkbox -->
         <div class="admin-form-group">
             <label class="soldout-checkbox-label">
                 <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
@@ -984,22 +993,22 @@
 
         <div class="admin-form-group">
             <label>Product Description & Highlights *</label>
-            <textarea id="admDesc" rows="3" placeholder="Fabric, fitting, care instructions, key highlights..."></textarea>
+            <textarea id="admDesc" rows="3" placeholder="Highlights, material, care instructions..."></textarea>
         </div>
 
         <div class="admin-form-group">
             <label>Promotional Badge</label>
-            <input type="text" id="admBadge" placeholder="e.g. Festive Drop ✨ / Bestseller 🔥">
+            <input type="text" id="admBadge" placeholder="e.g. Maha Deal 🔥 / Bridal Drop ✨">
         </div>
 
         <div style="display:flex; gap:10px;">
             <div class="admin-form-group" style="flex:1;">
                 <label>Offer Price (₹) *</label>
-                <input type="number" id="admPrice" placeholder="499">
+                <input type="number" id="admPrice" placeholder="199">
             </div>
             <div class="admin-form-group" style="flex:1;">
                 <label>Original MRP (₹) *</label>
-                <input type="number" id="admOrigPrice" placeholder="999">
+                <input type="number" id="admOrigPrice" placeholder="499">
             </div>
         </div>
 
@@ -1028,10 +1037,16 @@
                     <span class="price-discount" id="modalDiscount"></span>
                 </div>
 
-                <!-- Modal Size Selector -->
-                <div class="size-selector-block" id="modalSizeBlock">
-                    <label>Select Your Size (Required):</label>
-                    <div class="size-pills-row" id="modalSizePills"></div>
+                <!-- Color Selector -->
+                <div class="variant-selector-block" id="modalColorBlock">
+                    <label>Select Color (Required):</label>
+                    <div class="variant-pills-row" id="modalColorPills"></div>
+                </div>
+
+                <!-- Size Selector -->
+                <div class="variant-selector-block" id="modalSizeBlock">
+                    <label>Select Size (Required):</label>
+                    <div class="variant-pills-row" id="modalSizePills"></div>
                 </div>
 
                 <div style="font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:4px;">Product Highlights:</div>
@@ -1112,7 +1127,6 @@
         window.doc = doc;
         window.serverTimestamp = serverTimestamp;
 
-        // Firebase রিয়েল-টাইম লিসেনার
         const q = query(productsCol, orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             window.products = [];
@@ -1138,6 +1152,7 @@
         let galleryCompressedImages = [];
         let isProcessingPhotos = false;
         let selectedProductModalSize = null;
+        let selectedProductModalColor = null;
         let currentModalProductIndex = null;
         let existingImagesWhileEditing = [];
 
@@ -1322,13 +1337,19 @@
             document.getElementById('admPrice').value = p.price;
             document.getElementById('admOrigPrice').value = p.origPrice;
             document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
+            document.getElementById('admColors').value = (p.colors || []).join(', ');
 
-            // Checked sizes
+            // Clothing checkboxes
+            const standardSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+            let customSizes = [];
             document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
                 cb.checked = p.sizes ? p.sizes.includes(cb.value) : false;
             });
+            if (p.sizes) {
+                customSizes = p.sizes.filter(s => !standardSizes.includes(s));
+            }
+            document.getElementById('admCustomSizes').value = customSizes.join(', ');
 
-            // Cache existing images
             existingImagesWhileEditing = p.images || [p.img];
             galleryCompressedImages = [];
             const previewBox = document.getElementById('galleryPreviewRow');
@@ -1354,6 +1375,8 @@
             document.getElementById('admBadge').value = '';
             document.getElementById('admPrice').value = '';
             document.getElementById('admOrigPrice').value = '';
+            document.getElementById('admColors').value = '';
+            document.getElementById('admCustomSizes').value = '';
             document.getElementById('admIsSoldOut').checked = false;
             document.getElementById('galleryFileInput').value = '';
             document.getElementById('galleryPreviewRow').innerHTML = '';
@@ -1386,7 +1409,15 @@
             const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
             const isSoldOut = document.getElementById('admIsSoldOut').checked;
 
-            const selectedSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
+            // Collect Sizes (Standard + Custom)
+            const standardSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
+            const customSizesRaw = document.getElementById('admCustomSizes').value.trim();
+            const customSizes = customSizesRaw ? customSizesRaw.split(',').map(s => s.trim()).filter(s => s.length > 0) : [];
+            const allSizes = [...standardSizes, ...customSizes];
+
+            // Collect Colors
+            const colorsRaw = document.getElementById('admColors').value.trim();
+            const colors = colorsRaw ? colorsRaw.split(',').map(c => c.trim()).filter(c => c.length > 0) : [];
 
             const webLinks = [
                 document.getElementById('img1').value.trim(),
@@ -1430,7 +1461,8 @@
                     images: finalImages,
                     desc: desc,
                     category,
-                    sizes: selectedSizes,
+                    sizes: allSizes,
+                    colors: colors,
                     isSoldOut: isSoldOut,
                     badge: badge || "Hot Drop 🔥",
                     price,
@@ -1470,6 +1502,7 @@
         function viewProductModal(index) {
             currentModalProductIndex = index;
             selectedProductModalSize = null;
+            selectedProductModalColor = null;
             const item = window.products[index];
             const discount = Math.round(((item.origPrice - item.price) / item.origPrice) * 100);
             const imgList = (item.images && item.images.length > 0) ? item.images : [item.img || ''];
@@ -1498,6 +1531,32 @@
                 thumbsContainer.appendChild(thumb);
             });
 
+            // Color Selector
+            const colorBlock = document.getElementById('modalColorBlock');
+            const colorPillsContainer = document.getElementById('modalColorPills');
+            colorPillsContainer.innerHTML = '';
+
+            if (item.colors && item.colors.length > 0) {
+                colorBlock.style.display = 'block';
+                selectedProductModalColor = item.colors[0];
+
+                item.colors.forEach((col, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `variant-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.innerText = col;
+                    btn.onclick = function() {
+                        selectedProductModalColor = col;
+                        document.querySelectorAll('#modalColorPills .variant-pill-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    };
+                    colorPillsContainer.appendChild(btn);
+                });
+            } else {
+                colorBlock.style.display = 'none';
+                selectedProductModalColor = null;
+            }
+
             // Size Selector
             const sizeBlock = document.getElementById('modalSizeBlock');
             const sizePillsContainer = document.getElementById('modalSizePills');
@@ -1510,11 +1569,11 @@
                 item.sizes.forEach((sz, idx) => {
                     const btn = document.createElement('button');
                     btn.type = 'button';
-                    btn.className = `size-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.className = `variant-pill-btn ${idx === 0 ? 'active' : ''}`;
                     btn.innerText = sz;
                     btn.onclick = function() {
                         selectedProductModalSize = sz;
-                        document.querySelectorAll('.size-pill-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('#modalSizePills .variant-pill-btn').forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
                     };
                     sizePillsContainer.appendChild(btn);
@@ -1550,10 +1609,11 @@
             const item = window.products[index];
             if (item.isSoldOut) return;
 
-            if (item.sizes && item.sizes.length > 0) {
+            // If variants exist, open modal to let user choose
+            if ((item.sizes && item.sizes.length > 0) || (item.colors && item.colors.length > 0)) {
                 viewProductModal(index);
             } else {
-                addItemToCartInternal(item, null);
+                addItemToCartInternal(item, null, null);
                 toggleCartDrawer(true);
             }
         }
@@ -1562,7 +1622,7 @@
             if (currentModalProductIndex === null) return;
             const item = window.products[currentModalProductIndex];
             if (item.isSoldOut) return;
-            addItemToCartInternal(item, selectedProductModalSize);
+            addItemToCartInternal(item, selectedProductModalSize, selectedProductModalColor);
             toggleCartDrawer(true);
         }
 
@@ -1570,13 +1630,13 @@
             if (currentModalProductIndex === null) return;
             const item = window.products[currentModalProductIndex];
             if (item.isSoldOut) return;
-            addItemToCartInternal(item, selectedProductModalSize);
+            addItemToCartInternal(item, selectedProductModalSize, selectedProductModalColor);
             toggleCartDrawer(true);
         }
 
-        function addItemToCartInternal(item, chosenSize) {
+        function addItemToCartInternal(item, chosenSize, chosenColor) {
             const primaryImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
-            const existing = cart.find(c => c.name === item.name && c.selectedSize === chosenSize);
+            const existing = cart.find(c => c.name === item.name && c.selectedSize === chosenSize && c.selectedColor === chosenColor);
 
             if (existing) {
                 existing.qty += 1;
@@ -1586,6 +1646,7 @@
                     price: item.price,
                     img: primaryImg,
                     selectedSize: chosenSize,
+                    selectedColor: chosenColor,
                     qty: 1
                 });
             }
@@ -1641,7 +1702,10 @@
                     <img src="${item.img}" alt="${item.name}">
                     <div class="cart-item-info">
                         <h5>${item.name}</h5>
-                        ${item.selectedSize ? `<span class="cart-item-size-badge">Size: ${item.selectedSize}</span>` : ''}
+                        <div>
+                            ${item.selectedColor ? `<span class="cart-badge-tag">Color: ${item.selectedColor}</span>` : ''}
+                            ${item.selectedSize ? `<span class="cart-badge-tag">Size: ${item.selectedSize}</span>` : ''}
+                        </div>
                         <div style="font-size:0.75rem; color:var(--primary); font-weight:700;">₹${item.price} each</div>
                         <div class="cart-qty-ctrl">
                             <button class="qty-btn" onclick="updateCartQty(${i}, -1)">-</button>
@@ -1684,8 +1748,10 @@
             cart.forEach(c => {
                 const sub = c.price * c.qty;
                 total += sub;
-                const sizeTag = c.selectedSize ? ` [Size: ${c.selectedSize}]` : '';
-                itemsText += `• ${c.name}${sizeTag} (Qty: ${c.qty}) - ₹${sub}\n`;
+                let variantTags = '';
+                if (c.selectedColor) variantTags += ` [Color: ${c.selectedColor}]`;
+                if (c.selectedSize) variantTags += ` [Size: ${c.selectedSize}]`;
+                itemsText += `• ${c.name}${variantTags} (Qty: ${c.qty}) - ₹${sub}\n`;
             });
 
             let message = `*NEW ORDER - TRENDVIBE STORE*\n`;
@@ -1720,4 +1786,4 @@
         syncCartState();
     </script>
 </body>
-              </html>
+                </html>
