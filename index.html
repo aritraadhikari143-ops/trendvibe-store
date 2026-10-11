@@ -260,6 +260,13 @@
             border: 1px solid rgba(250, 204, 21, 0.3);
         }
 
+        .card-badge.sold-out {
+            background: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            border-color: #ef4444;
+            font-weight: 800;
+        }
+
         .card-body {
             padding: 12px;
             display: flex;
@@ -377,6 +384,26 @@
             cursor: pointer;
         }
 
+        .btn-disabled {
+            background: #334155 !important;
+            color: #94a3b8 !important;
+            border: 1px solid #475569 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .btn-edit-card {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
         .btn-delete-card {
             background: rgba(239, 68, 68, 0.15);
             color: var(--danger);
@@ -386,7 +413,7 @@
             font-size: 0.72rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         /* Product Gallery Modal */
@@ -738,6 +765,20 @@
             cursor: pointer;
         }
 
+        .soldout-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--danger);
+            cursor: pointer;
+        }
+
         .gallery-upload-card {
             background: var(--bg-base);
             border: 2px dashed rgba(56, 189, 248, 0.4);
@@ -793,6 +834,19 @@
             font-weight: 800;
             cursor: pointer;
             margin-top: 8px;
+        }
+
+        .btn-cancel-edit {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            display: none;
         }
 
         .empty-store-indicator {
@@ -869,10 +923,12 @@
     <!-- Admin Console -->
     <div id="adminManagerCard">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-            <h4 style="color:var(--primary);">Store Management Console</h4>
+            <h4 style="color:var(--primary);" id="adminFormHeading">Store Management Console</h4>
             <button onclick="terminateAdminSession()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:700;">Logout</button>
         </div>
         
+        <input type="hidden" id="editingProductIndex" value="-1">
+
         <div class="admin-form-group">
             <label>Product Title *</label>
             <input type="text" id="admName" placeholder="e.g. GoSriKi Printed Anarkali Kurta Set">
@@ -882,7 +938,7 @@
             <label>📁 Option A: Choose Images from Phone Gallery</label>
             <div class="gallery-upload-card">
                 <input type="file" id="galleryFileInput" accept="image/*" multiple onchange="processGalleryPhotos(event)">
-                <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select multiple photos from your mobile device</div>
+                <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select photos from phone (Leave empty if keeping existing images)</div>
                 <div class="gallery-preview-row" id="galleryPreviewRow"></div>
             </div>
         </div>
@@ -907,9 +963,8 @@
             </select>
         </div>
 
-        <!-- Available Sizes selection for Clothing -->
         <div class="admin-form-group">
-            <label>Available Sizes (Tick if clothing/dress, leave blank for gadgets):</label>
+            <label>Available Sizes (Tick if clothing, leave blank for gadgets):</label>
             <div class="admin-sizes-checkbox-row">
                 <label><input type="checkbox" name="admSizes" value="S"> S</label>
                 <label><input type="checkbox" name="admSizes" value="M"> M</label>
@@ -917,6 +972,14 @@
                 <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
                 <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
             </div>
+        </div>
+
+        <!-- Sold Out Toggle Checkbox -->
+        <div class="admin-form-group">
+            <label class="soldout-checkbox-label">
+                <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
+                <span>Mark as SOLD OUT (Disable buying & show out of stock)</span>
+            </label>
         </div>
 
         <div class="admin-form-group">
@@ -941,12 +1004,13 @@
         </div>
 
         <button class="btn-submit-product" id="publishBtn" onclick="publishProductToStore()">Publish To Live Catalog 🚀</button>
+        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="resetAdminForm()">Cancel Editing</button>
     </div>
 
     <!-- Product Showcase -->
     <main class="catalog-container" id="productShowcaseGrid"></main>
 
-    <!-- Product Quick View Modal with Size Selection -->
+    <!-- Product Quick View Modal -->
     <div class="item-modal-backdrop" id="productViewModal" onclick="closeProductModal(event)">
         <div class="item-modal-box">
             <button class="modal-close-ico" onclick="closeProductModal(null, true)">&times;</button>
@@ -1021,6 +1085,7 @@
         let isProcessingPhotos = false;
         let selectedProductModalSize = null;
         let currentModalProductIndex = null;
+        let existingImagesWhileEditing = [];
 
         let cart = JSON.parse(localStorage.getItem('tv_cart')) || [];
         let products = JSON.parse(localStorage.getItem('tv_inventory')) || [];
@@ -1055,6 +1120,7 @@
             isAdminLoggedIn = false;
             sessionStorage.removeItem('tv_admin_session');
             refreshAdminVisibility();
+            resetAdminForm();
             renderCatalog();
             alert("Admin signed out.");
         }
@@ -1098,9 +1164,9 @@
 
             isProcessingPhotos = true;
             publishBtn.disabled = true;
-            publishBtn.innerText = "⏳ Processing Photos, please wait...";
+            publishBtn.innerText = "⏳ Processing Photos...";
             statusLabel.style.color = '#38bdf8';
-            statusLabel.innerText = `Processing & optimizing ${files.length} photo(s)...`;
+            statusLabel.innerText = `Optimizing ${files.length} photo(s)...`;
 
             try {
                 for (let i = 0; i < files.length; i++) {
@@ -1113,14 +1179,15 @@
                 }
 
                 statusLabel.style.color = '#4ade80';
-                statusLabel.innerText = `✓ ${galleryCompressedImages.length} photo(s) ready to upload!`;
+                statusLabel.innerText = `✓ ${galleryCompressedImages.length} new photo(s) selected!`;
             } catch (err) {
                 statusLabel.style.color = '#ef4444';
-                statusLabel.innerText = '❌ Failed to process some images. Please try again.';
+                statusLabel.innerText = '❌ Failed to process images.';
             } finally {
                 isProcessingPhotos = false;
                 publishBtn.disabled = false;
-                publishBtn.innerText = "Publish To Live Catalog 🚀";
+                const editIdx = parseInt(document.getElementById('editingProductIndex').value);
+                publishBtn.innerText = editIdx >= 0 ? "Update Product 🔄" : "Publish To Live Catalog 🚀";
             }
         }
 
@@ -1147,13 +1214,14 @@
             filtered.forEach((p, idx) => {
                 const discount = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
                 const primaryImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || '');
+                const isSoldOut = !!p.isSoldOut;
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
                     <div class="product-thumbnail-box" onclick="viewProductModal(${idx})">
                         <img src="${primaryImg}" alt="${p.name}">
-                        ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
+                        ${isSoldOut ? `<span class="card-badge sold-out">SOLD OUT 🚫</span>` : (p.badge ? `<span class="card-badge">${p.badge}</span>` : '')}
                     </div>
                     <div class="card-body">
                         <div class="card-meta">
@@ -1169,14 +1237,85 @@
                         </div>
                         <div class="btn-card-group">
                             <button class="btn-view-item" onclick="viewProductModal(${idx})">View Details 🔍</button>
-                            <button class="btn-add-cart" onclick="quickAddToCart(${idx})">+ Add to Cart</button>
-                            <button class="btn-buy-instant" onclick="viewProductModal(${idx})">Buy Now</button>
-                            ${isAdminLoggedIn ? `<button class="btn-delete-card" onclick="removeProductByIndex(${idx})">🗑 Delete Listing</button>` : ''}
+                            
+                            ${isSoldOut ? `
+                                <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                                <button class="btn-buy-instant btn-disabled" disabled>Sold Out</button>
+                            ` : `
+                                <button class="btn-add-cart" onclick="quickAddToCart(${idx})">+ Add to Cart</button>
+                                <button class="btn-buy-instant" onclick="viewProductModal(${idx})">Buy Now</button>
+                            `}
+
+                            ${isAdminLoggedIn ? `
+                                <button class="btn-edit-card" onclick="startEditingProduct(${idx})">✏️ Edit Listing & Price</button>
+                                <button class="btn-delete-card" onclick="removeProductByIndex(${idx})">🗑 Delete Listing</button>
+                            ` : ''}
                         </div>
                     </div>
                 `;
                 showcaseGrid.appendChild(card);
             });
+        }
+
+        function startEditingProduct(index) {
+            const p = products[index];
+            document.getElementById('editingProductIndex').value = index;
+            document.getElementById('adminFormHeading').innerText = `Editing: ${p.name.substring(0, 22)}...`;
+            document.getElementById('admName').value = p.name;
+            document.getElementById('admCategory').value = p.category || 'fashion';
+            document.getElementById('admDesc').value = p.desc || '';
+            document.getElementById('admBadge').value = p.badge || '';
+            document.getElementById('admPrice').value = p.price;
+            document.getElementById('admOrigPrice').value = p.origPrice;
+            document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
+
+            // Checked sizes
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
+                cb.checked = p.sizes ? p.sizes.includes(cb.value) : false;
+            });
+
+            // Cache existing images
+            existingImagesWhileEditing = p.images || [p.img];
+            galleryCompressedImages = [];
+            const previewBox = document.getElementById('galleryPreviewRow');
+            previewBox.innerHTML = '';
+            existingImagesWhileEditing.forEach(imgSrc => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                previewBox.appendChild(thumb);
+            });
+            document.getElementById('galleryUploadStatus').innerText = 'Showing existing images. Upload new files if you wish to change.';
+
+            document.getElementById('publishBtn').innerText = "Update Product 🔄";
+            document.getElementById('cancelEditBtn').style.display = 'block';
+
+            // Scroll up to admin box
+            adminManagerCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetAdminForm() {
+            document.getElementById('editingProductIndex').value = "-1";
+            document.getElementById('adminFormHeading').innerText = "Store Management Console";
+            document.getElementById('admName').value = '';
+            document.getElementById('admDesc').value = '';
+            document.getElementById('admBadge').value = '';
+            document.getElementById('admPrice').value = '';
+            document.getElementById('admOrigPrice').value = '';
+            document.getElementById('admIsSoldOut').checked = false;
+            document.getElementById('galleryFileInput').value = '';
+            document.getElementById('galleryPreviewRow').innerHTML = '';
+            document.getElementById('galleryUploadStatus').innerText = 'Tap above to select multiple photos from your mobile device';
+            document.getElementById('img1').value = '';
+            document.getElementById('img2').value = '';
+            document.getElementById('img3').value = '';
+            document.getElementById('img4').value = '';
+            document.getElementById('img5').value = '';
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => cb.checked = false);
+            galleryCompressedImages = [];
+            existingImagesWhileEditing = [];
+
+            document.getElementById('publishBtn').innerText = "Publish To Live Catalog 🚀";
+            document.getElementById('cancelEditBtn').style.display = 'none';
         }
 
         function publishProductToStore() {
@@ -1185,14 +1324,15 @@
                 return;
             }
 
+            const editIndex = parseInt(document.getElementById('editingProductIndex').value);
             const name = document.getElementById('admName').value.trim();
             const desc = document.getElementById('admDesc').value.trim();
             const category = document.getElementById('admCategory').value;
             const badge = document.getElementById('admBadge').value.trim();
             const price = parseFloat(document.getElementById('admPrice').value);
             const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
+            const isSoldOut = document.getElementById('admIsSoldOut').checked;
 
-            // Get selected size pills from Admin
             const selectedSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
 
             const webLinks = [
@@ -1203,14 +1343,19 @@
                 document.getElementById('img5').value.trim()
             ].filter(u => u.length > 0);
 
-            const combinedImages = [...galleryCompressedImages, ...webLinks];
+            let finalImages = [];
+            if (galleryCompressedImages.length > 0 || webLinks.length > 0) {
+                finalImages = [...galleryCompressedImages, ...webLinks];
+            } else if (editIndex >= 0 && existingImagesWhileEditing.length > 0) {
+                finalImages = existingImagesWhileEditing;
+            }
 
             if (!name) {
                 alert("Please enter Product Title!");
                 return;
             }
-            if (combinedImages.length === 0) {
-                alert("Please choose at least 1 image from your phone gallery or provide an image URL!");
+            if (finalImages.length === 0) {
+                alert("Please select at least 1 image!");
                 return;
             }
             if (!desc) {
@@ -1223,37 +1368,31 @@
             }
 
             try {
-                products.unshift({
+                const productObj = {
                     name,
-                    images: combinedImages,
+                    images: finalImages,
                     desc: desc,
                     category,
-                    sizes: selectedSizes, // Array of sizes e.g. ['S', 'M', 'L']
+                    sizes: selectedSizes,
+                    isSoldOut: isSoldOut,
                     badge: badge || "Hot Drop 🔥",
                     price,
                     origPrice
-                });
+                };
+
+                if (editIndex >= 0) {
+                    // Update existing
+                    products[editIndex] = productObj;
+                    alert("Product details updated successfully! 🔄");
+                } else {
+                    // Create new
+                    products.unshift(productObj);
+                    alert("Product successfully published to TrendVibe Store! 🚀");
+                }
 
                 localStorage.setItem('tv_inventory', JSON.stringify(products));
-
-                document.getElementById('admName').value = '';
-                document.getElementById('admDesc').value = '';
-                document.getElementById('admBadge').value = '';
-                document.getElementById('admPrice').value = '';
-                document.getElementById('admOrigPrice').value = '';
-                document.getElementById('galleryFileInput').value = '';
-                document.getElementById('galleryPreviewRow').innerHTML = '';
-                document.getElementById('galleryUploadStatus').innerText = 'Tap above to select multiple photos from your mobile device';
-                document.getElementById('img1').value = '';
-                document.getElementById('img2').value = '';
-                document.getElementById('img3').value = '';
-                document.getElementById('img4').value = '';
-                document.getElementById('img5').value = '';
-                document.querySelectorAll('input[name="admSizes"]').forEach(cb => cb.checked = false);
-                galleryCompressedImages = [];
-
+                resetAdminForm();
                 renderCatalog();
-                alert("Product successfully published with Sizes to TrendVibe Store!");
             } catch (err) {
                 alert("Storage limit reached. Please remove 1 old product to free up space!");
             }
@@ -1273,6 +1412,7 @@
             const item = products[index];
             const discount = Math.round(((item.origPrice - item.price) / item.origPrice) * 100);
             const imgList = (item.images && item.images.length > 0) ? item.images : [item.img || ''];
+            const isSoldOut = !!item.isSoldOut;
 
             document.getElementById('modalMainImg').src = imgList[0];
             document.getElementById('modalCategory').innerText = item.category;
@@ -1297,14 +1437,13 @@
                 thumbsContainer.appendChild(thumb);
             });
 
-            // Size Selector Setup
+            // Size Selector
             const sizeBlock = document.getElementById('modalSizeBlock');
             const sizePillsContainer = document.getElementById('modalSizePills');
             sizePillsContainer.innerHTML = '';
 
             if (item.sizes && item.sizes.length > 0) {
                 sizeBlock.style.display = 'block';
-                // Select first size by default
                 selectedProductModalSize = item.sizes[0];
 
                 item.sizes.forEach((sz, idx) => {
@@ -1325,10 +1464,17 @@
             }
 
             const actionsBox = document.getElementById('modalActions');
-            actionsBox.innerHTML = `
-                <button class="btn-add-cart" onclick="confirmAddToCartFromModal(); closeProductModal(null, true);">+ Add to Cart</button>
-                <button class="btn-buy-instant" onclick="confirmBuyNowFromModal(); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
-            `;
+            if (isSoldOut) {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                    <button class="btn-buy-instant btn-disabled" disabled>This Item is Sold Out</button>
+                `;
+            } else {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart" onclick="confirmAddToCartFromModal(); closeProductModal(null, true);">+ Add to Cart</button>
+                    <button class="btn-buy-instant" onclick="confirmBuyNowFromModal(); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
+                `;
+            }
 
             document.getElementById('productViewModal').style.display = 'block';
         }
@@ -1341,8 +1487,9 @@
 
         function quickAddToCart(index) {
             const item = products[index];
+            if (item.isSoldOut) return;
+
             if (item.sizes && item.sizes.length > 0) {
-                // If item has sizes, open modal to let user pick size
                 viewProductModal(index);
             } else {
                 addItemToCartInternal(item, null);
@@ -1353,6 +1500,7 @@
         function confirmAddToCartFromModal() {
             if (currentModalProductIndex === null) return;
             const item = products[currentModalProductIndex];
+            if (item.isSoldOut) return;
             addItemToCartInternal(item, selectedProductModalSize);
             toggleCartDrawer(true);
         }
@@ -1360,6 +1508,7 @@
         function confirmBuyNowFromModal() {
             if (currentModalProductIndex === null) return;
             const item = products[currentModalProductIndex];
+            if (item.isSoldOut) return;
             addItemToCartInternal(item, selectedProductModalSize);
             toggleCartDrawer(true);
         }
@@ -1511,4 +1660,4 @@
         syncCartState();
     </script>
 </body>
-                </html>
+    </html>
