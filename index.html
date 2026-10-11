@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TrendVibe Store | Premium Aesthetic Drops & Tech Gear</title>
     
+    <!-- Favicon & Touch Icons for Google Search and Browsers -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <meta name="google-site-verification" content="GjkDVxlF89ErQQna7F4b9hooM-_l5DV1UcBBQlpfTKM" />
     <meta name="description" content="Shop viral minimalist jewelry, smart pocket gadgets, and aesthetic streetwear drops. Free Express Shipping, UPI & Cash on Delivery across India.">
     
@@ -76,6 +81,17 @@
             letter-spacing: -0.5px;
             color: var(--text-head);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--primary);
         }
 
         .brand-logo span {
@@ -415,7 +431,6 @@
             margin-top: 2px;
         }
 
-        /* Product Gallery Modal */
         .item-modal-backdrop {
             display: none;
             position: fixed;
@@ -502,7 +517,6 @@
             color: var(--text-head);
         }
 
-        /* Variant Selectors (Size & Color) */
         .variant-selector-block {
             margin: 12px 0;
             display: none;
@@ -549,7 +563,6 @@
             white-space: pre-line;
         }
 
-        /* Cart Drawer */
         .cart-modal-backdrop {
             display: none;
             position: fixed;
@@ -709,7 +722,6 @@
             font-size: 0.85rem;
         }
 
-        /* Admin Console */
         #adminManagerCard {
             display: none;
             max-width: 520px;
@@ -885,7 +897,10 @@
     </div>
 
     <header>
-        <a href="#" class="brand-logo">TrendVibe <span>Store</span></a>
+        <a href="#" class="brand-logo">
+            <img src="logo.png" alt="TrendVibe Logo">
+            <span>TrendVibe <span>Store</span></span>
+        </a>
         <button class="cart-trigger-btn" onclick="toggleCartDrawer(true)">
             <span>🛒 Cart</span>
             <span class="cart-counter-badge" id="headerCartCount">0</span>
@@ -964,13 +979,11 @@
             </select>
         </div>
 
-        <!-- NEW: Color Options Input -->
         <div class="admin-form-group">
             <label>🎨 Available Colors (Comma separated, e.g. Pink, White, Yellow, Green, Black):</label>
             <input type="text" id="admColors" placeholder="Pink, White, Yellow, Green, Black">
         </div>
 
-        <!-- NEW & FLEXIBLE: Sizes Input -->
         <div class="admin-form-group">
             <label>📏 Standard Clothing Sizes (Tick if applicable):</label>
             <div class="admin-sizes-checkbox-row">
@@ -1037,13 +1050,11 @@
                     <span class="price-discount" id="modalDiscount"></span>
                 </div>
 
-                <!-- Color Selector -->
                 <div class="variant-selector-block" id="modalColorBlock">
                     <label>Select Color (Required):</label>
                     <div class="variant-pills-row" id="modalColorPills"></div>
                 </div>
 
-                <!-- Size Selector -->
                 <div class="variant-selector-block" id="modalSizeBlock">
                     <label>Select Size (Required):</label>
                     <div class="variant-pills-row" id="modalSizePills"></div>
@@ -1339,7 +1350,6 @@
             document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
             document.getElementById('admColors').value = (p.colors || []).join(', ');
 
-            // Clothing checkboxes
             const standardSizes = ['S', 'M', 'L', 'XL', 'XXL'];
             let customSizes = [];
             document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
@@ -1409,13 +1419,11 @@
             const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
             const isSoldOut = document.getElementById('admIsSoldOut').checked;
 
-            // Collect Sizes (Standard + Custom)
             const standardSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
             const customSizesRaw = document.getElementById('admCustomSizes').value.trim();
             const customSizes = customSizesRaw ? customSizesRaw.split(',').map(s => s.trim()).filter(s => s.length > 0) : [];
             const allSizes = [...standardSizes, ...customSizes];
 
-            // Collect Colors
             const colorsRaw = document.getElementById('admColors').value.trim();
             const colors = colorsRaw ? colorsRaw.split(',').map(c => c.trim()).filter(c => c.length > 0) : [];
 
@@ -1516,7 +1524,6 @@
             document.getElementById('modalDiscount').innerText = `${discount}% OFF`;
             document.getElementById('modalDesc').innerText = item.desc || "Verified quality product with free express home delivery across India.";
 
-            // Thumbnails
             const thumbsContainer = document.getElementById('modalThumbnails');
             thumbsContainer.innerHTML = '';
             imgList.forEach((src, i) => {
@@ -1531,7 +1538,6 @@
                 thumbsContainer.appendChild(thumb);
             });
 
-            // Color Selector
             const colorBlock = document.getElementById('modalColorBlock');
             const colorPillsContainer = document.getElementById('modalColorPills');
             colorPillsContainer.innerHTML = '';
@@ -1557,7 +1563,6 @@
                 selectedProductModalColor = null;
             }
 
-            // Size Selector
             const sizeBlock = document.getElementById('modalSizeBlock');
             const sizePillsContainer = document.getElementById('modalSizePills');
             sizePillsContainer.innerHTML = '';
@@ -1609,7 +1614,6 @@
             const item = window.products[index];
             if (item.isSoldOut) return;
 
-            // If variants exist, open modal to let user choose
             if ((item.sizes && item.sizes.length > 0) || (item.colors && item.colors.length > 0)) {
                 viewProductModal(index);
             } else {
@@ -1786,4 +1790,4 @@
         syncCartState();
     </script>
 </body>
-                </html>
+    </html>
