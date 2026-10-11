@@ -1,237 +1,1723 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrendVibe Store</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      padding: 16px;
-    }
-    header {
-      text-align: center;
-      padding: 20px 0;
-      border-bottom: 1px solid #1e293b;
-      margin-bottom: 24px;
-    }
-    header h1 {
-      color: #38bdf8;
-      font-size: 28px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .form-box {
-      background-color: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      margin-bottom: 32px;
-    }
-    .form-box h2 {
-      font-size: 18px;
-      margin-bottom: 16px;
-      color: #e2e8f0;
-    }
-    .form-box input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      background-color: #0f172a;
-      color: #fff;
-      font-size: 14px;
-    }
-    .form-box button {
-      width: 100%;
-      padding: 12px;
-      background-color: #38bdf8;
-      color: #0f172a;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background 0.2s;
-    }
-    .form-box button:active {
-      background-color: #0284c7;
-    }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .product-card {
-      background-color: #1e293b;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #334155;
-      display: flex;
-      flex-direction: column;
-    }
-    .product-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background-color: #334155;
-    }
-    .card-body {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-    }
-    .card-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #f1f5f9;
-      margin-bottom: 8px;
-    }
-    .card-price {
-      font-size: 16px;
-      font-weight: bold;
-      color: #4ade80;
-    }
-    .loading-text {
-      text-align: center;
-      color: #94a3b8;
-      grid-column: 1 / -1;
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TrendVibe Store | Premium Aesthetic Drops & Tech Gear</title>
+    
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="GjkDVxlF89ErQQna7F4b9hooM-_l5DV1UcBBQlpfTKM" />
+    <meta name="description" content="Shop viral minimalist jewelry, smart pocket gadgets, and aesthetic streetwear drops. Free Express Shipping, UPI & Cash on Delivery across India.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #090d16;
+            --surface: #111827;
+            --surface-elevated: #1f293d;
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.25);
+            --accent: #a855f7;
+            --whatsapp: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text-head: #ffffff;
+            --text-body: #e2e8f0;
+            --text-muted: #94a3b8;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            overflow-x: hidden;
+            padding-bottom: 90px;
+        }
+
+        .marquee-strip {
+            background: linear-gradient(90deg, #0284c7, #9333ea);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 8px 12px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 80;
+            background: rgba(9, 13, 22, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-head);
+            text-decoration: none;
+        }
+
+        .brand-logo span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cart-trigger-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-head);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-counter-badge {
+            background: var(--primary);
+            color: #000;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 99px;
+        }
+
+        .search-container {
+            padding: 16px 18px 8px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .search-box-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #ffffff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 900px;
+            margin: 14px auto;
+            padding: 0 18px;
+        }
+
+        .value-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 6px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .value-card .value-ico {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .value-card p {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-body);
+        }
+
+        .category-filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 18px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            scrollbar-width: none;
+        }
+        .category-filter-row::-webkit-scrollbar { display: none; }
+
+        .filter-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .filter-chip.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            font-weight: 700;
+        }
+
+        .catalog-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .catalog-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-thumbnail-box {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            background: #1e293b;
+            cursor: pointer;
+        }
+
+        .product-thumbnail-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            color: #facc15;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+        }
+
+        .card-badge.sold-out {
+            background: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            border-color: #ef4444;
+            font-weight: 800;
+        }
+
+        .card-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.68rem;
+            margin-bottom: 6px;
+        }
+
+        .card-category {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-rating {
+            color: #facc15;
+            font-weight: 700;
+        }
+
+        .product-title {
+            font-size: 0.86rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text-head);
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .product-snippet {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .price-current {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-head);
+        }
+
+        .price-mrp {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-discount {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #4ade80;
+        }
+
+        .btn-card-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .btn-view-item {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-head);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 9px;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-buy-instant {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-disabled {
+            background: #334155 !important;
+            color: #94a3b8 !important;
+            border: 1px solid #475569 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .btn-edit-card {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .btn-delete-card {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        /* Product Gallery Modal */
+        .item-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 120;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .item-modal-box {
+            max-width: 480px;
+            margin: 20px auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close-ico {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-img-holder {
+            width: 100%;
+            height: 300px;
+            background: #1e293b;
+        }
+
+        .modal-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-thumbs-row {
+            display: flex;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-base);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .modal-thumbs-row::-webkit-scrollbar { display: none; }
+
+        .modal-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-thumb.active {
+            border-color: var(--primary);
+            opacity: 1;
+        }
+
+        .modal-details-body {
+            padding: 18px;
+        }
+
+        .modal-details-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-head);
+        }
+
+        /* Size Selector Styling */
+        .size-selector-block {
+            margin: 14px 0;
+            display: none;
+        }
+
+        .size-selector-block label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .size-pills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .size-pill-btn {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-pill-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .modal-details-body p.desc {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 12px 0 16px;
+            white-space: pre-line;
+        }
+
+        /* Cart Drawer */
+        .cart-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+        }
+
+        .cart-modal-drawer {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cart-modal-backdrop.open { display: block; }
+        .cart-modal-drawer.open { transform: translateX(0); }
+
+        .cart-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cart-row-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            align-items: center;
+        }
+
+        .cart-row-item img {
+            width: 54px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info { flex-grow: 1; }
+        .cart-item-info h5 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-head);
+            margin-bottom: 2px;
+        }
+
+        .cart-item-size-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(56, 189, 248, 0.12);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+
+        .cart-qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .qty-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cart-footer-pane {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--surface-elevated);
+        }
+
+        .checkout-address-box input {
+            width: 100%;
+            padding: 9px 12px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.82rem;
+            outline: none;
+            margin-bottom: 6px;
+        }
+
+        .cart-summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-head);
+            margin-bottom: 12px;
+        }
+
+        .btn-checkout-wa {
+            width: 100%;
+            background: var(--whatsapp);
+            color: #000;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+        }
+
+        .btn-checkout-upi {
+            width: 100%;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 11px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        /* Admin Console */
+        #adminManagerCard {
+            display: none;
+            max-width: 520px;
+            margin: 20px auto;
+            padding: 22px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
+        }
+
+        .admin-form-group {
+            margin-bottom: 14px;
+        }
+
+        .admin-form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .admin-form-group input, 
+        .admin-form-group select, 
+        .admin-form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: #ffffff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .admin-sizes-checkbox-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: var(--bg-base);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .admin-sizes-checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-body);
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .soldout-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--danger);
+            cursor: pointer;
+        }
+
+        .gallery-upload-card {
+            background: var(--bg-base);
+            border: 2px dashed rgba(56, 189, 248, 0.4);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .gallery-upload-card input[type="file"] {
+            display: block;
+            width: 100%;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .gallery-preview-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .gallery-preview-row img {
+            width: 52px;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            flex-shrink: 0;
+        }
+
+        .image-url-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .image-url-inputs input {
+            padding: 8px 10px;
+            font-size: 0.8rem;
+        }
+
+        .btn-submit-product {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .btn-cancel-edit {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .empty-store-indicator {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 16px;
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .admin-portal-link {
+            color: #475569;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.72rem;
+            display: inline-block;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
+    <div class="marquee-strip">
+        ⚡ FREE ALL-INDIA SHIPPING | PREPAID UPI & CASH ON DELIVERY (COD) ⚡
+    </div>
+
     <header>
-      <h1>TrendVibe Store</h1>
-      <p style="color: #94a3b8; font-size: 14px; margin-top: 4px;">Cloud Firestore লাইভ প্রোডাক্ট ম্যানেজমেন্ট</p>
+        <a href="#" class="brand-logo">TrendVibe <span>Store</span></a>
+        <button class="cart-trigger-btn" onclick="toggleCartDrawer(true)">
+            <span>🛒 Cart</span>
+            <span class="cart-counter-badge" id="headerCartCount">0</span>
+        </button>
     </header>
 
-    <!-- নতুন প্রোডাক্ট অ্যাড করার ফর্ম -->
-    <div class="form-box">
-      <h2>নতুন প্রোডাক্ট যুক্ত করুন</h2>
-      <input type="text" id="prodName" placeholder="প্রোডাক্টের নাম (যেমন: Oversized T-Shirt)" required>
-      <input type="number" id="prodPrice" placeholder="দাম (যেমন: 499)" required>
-      <input type="url" id="prodImage" placeholder="ছবির লিংক / Image URL (যেমন: Unsplash বা কোনো ছবি)" required>
-      <button id="addBtn">প্রোডাক্ট আপলোড করুন</button>
+    <div class="search-container">
+        <div class="search-box-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="storeSearchInput" class="search-input" placeholder="Search viral drops, mini tech, jewelry..." oninput="handleLiveSearch()">
+        </div>
     </div>
 
-    <!-- প্রোডাক্ট ডিসপ্লে গ্রিড -->
-    <h2 style="font-size: 20px; margin-bottom: 16px;">উপলব্ধ প্রোডাক্ট তালিকা</h2>
-    <div class="products-grid" id="productContainer">
-      <p class="loading-text">ক্লাউড ডাটাবেস থেকে প্রোডাক্ট লোড হচ্ছে...</p>
+    <div class="value-grid">
+        <div class="value-card">
+            <span class="value-ico">🚚</span>
+            <p>Free Delivery</p>
+        </div>
+        <div class="value-card">
+            <span class="value-ico">💳</span>
+            <p>UPI & COD Accepted</p>
+        </div>
+        <div class="value-card">
+            <span class="value-ico">🛡️</span>
+            <p>Quality Verified</p>
+        </div>
     </div>
-  </div>
 
-  <!-- Firebase ও Firestore সংযোগ স্ক্রিপ্ট -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      addDoc, 
-      onSnapshot,
-      serverTimestamp,
-      query,
-      orderBy 
-    } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+    <div class="category-filter-row">
+        <button class="filter-chip active" onclick="applyCategoryFilter('all', this)">All Drops 🔥</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('jewelry', this)">Aesthetic Jewelry 💍</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('gadgets', this)">Mini Gadgets ⚡</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('fashion', this)">Streetwear & Fashion 👗</button>
+    </div>
 
-    // প্রজেক্টের Firebase কনফিগারেশন
-    const firebaseConfig = {
-      apiKey: "AIzaSyB0HtHh-jYWePRqyiGWvSPBGHOwDy2EOrA",
-      authDomain: "trendvibe-store.firebaseapp.com",
-      projectId: "trendvibe-store",
-      storageBucket: "trendvibe-store.firebasestorage.app",
-      messagingSenderId: "319103175096",
-      appId: "1:319103175096:web:18e9368e4c651d08f3674d",
-      measurementId: "G-M1P2HYLSGY"
-    };
+    <!-- Admin Console -->
+    <div id="adminManagerCard">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h4 style="color:var(--primary);" id="adminFormHeading">Store Management Console</h4>
+            <button onclick="terminateAdminSession()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:700;">Logout</button>
+        </div>
+        
+        <input type="hidden" id="editingProductDocId" value="">
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const productsCol = collection(db, "products");
+        <div class="admin-form-group">
+            <label>Product Title *</label>
+            <input type="text" id="admName" placeholder="e.g. GoSriKi Printed Anarkali Kurta Set">
+        </div>
 
-    // ১. ফর্ম থেকে ক্লাউডে প্রোডাক্ট সেভ করা
-    const addBtn = document.getElementById("addBtn");
-    const nameInput = document.getElementById("prodName");
-    const priceInput = document.getElementById("prodPrice");
-    const imgInput = document.getElementById("prodImage");
-
-    addBtn.addEventListener("click", async () => {
-      const name = nameInput.value.trim();
-      const price = priceInput.value.trim();
-      const imageUrl = imgInput.value.trim();
-
-      if (!name || !price || !imageUrl) {
-        alert("দয়া করে সব ঘর পূরণ করুন!");
-        return;
-      }
-
-      addBtn.innerText = "আপলোড হচ্ছে...";
-      addBtn.disabled = true;
-
-      try {
-        await addDoc(productsCol, {
-          name: name,
-          price: Number(price),
-          imageUrl: imageUrl,
-          createdAt: serverTimestamp()
-        });
-
-        nameInput.value = "";
-        priceInput.value = "";
-        imgInput.value = "";
-        alert("প্রোডাক্ট সফলভাবে ক্লাউডে যুক্ত হয়েছে!");
-      } catch (err) {
-        console.error("প্রোডাক্ট যোগ করতে সমস্যা হয়েছে:", err);
-        alert("ত্রুটি: " + err.message);
-      } finally {
-        addBtn.innerText = "প্রোডাক্ট আপলোড করুন";
-        addBtn.disabled = false;
-      }
-    });
-
-    // ২. ক্লাউড থেকে রিয়েল-টাইম প্রোডাক্ট লোড করা (সব ডিভাইসে স্বয়ংক্রিয়ভাবে আপডেট হবে)
-    const container = document.getElementById("productContainer");
-    const q = query(productsCol, orderBy("createdAt", "desc"));
-
-    onSnapshot(q, (snapshot) => {
-      if (snapshot.empty) {
-        container.innerHTML = '<p class="loading-text">কোনো প্রোডাক্ট পাওয়া যায়নি। ওপরে নতুন প্রোডাক্ট যোগ করুন!</p>';
-        return;
-      }
-
-      let html = "";
-      snapshot.forEach((doc) => {
-        const item = doc.data();
-        html += `
-          <div class="product-card">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/200'}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200'">
-            <div class="card-body">
-              <div class="card-title">${item.name}</div>
-              <div class="card-price">₹${item.price}</div>
+        <div class="admin-form-group">
+            <label>📁 Option A: Choose Images from Phone Gallery</label>
+            <div class="gallery-upload-card">
+                <input type="file" id="galleryFileInput" accept="image/*" multiple onchange="processGalleryPhotos(event)">
+                <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select photos from phone (Leave empty if keeping existing images)</div>
+                <div class="gallery-preview-row" id="galleryPreviewRow"></div>
             </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }, (error) => {
-      console.error("ডাটা লোড ত্রুটি:", error);
-      container.innerHTML = '<p class="loading-text" style="color: #f87171;">ডাটা লোড করতে সমস্যা হয়েছে।</p>';
-    });
-  </script>
+        </div>
+
+        <div class="admin-form-group">
+            <label>🔗 Option B: Or Paste Image URLs (Meesho / Web)</label>
+            <div class="image-url-inputs">
+                <input type="url" id="img1" placeholder="Image 1 URL (Main Cover Image)">
+                <input type="url" id="img2" placeholder="Image 2 URL (Angle / Detail)">
+                <input type="url" id="img3" placeholder="Image 3 URL">
+                <input type="url" id="img4" placeholder="Image 4 URL">
+                <input type="url" id="img5" placeholder="Image 5 URL">
+            </div>
+        </div>
+
+        <div class="admin-form-group">
+            <label>Department Category *</label>
+            <select id="admCategory">
+                <option value="fashion">Streetwear & Fashion 👗</option>
+                <option value="gadgets">Mini Gadgets ⚡</option>
+                <option value="jewelry">Aesthetic Jewelry 💍</option>
+            </select>
+        </div>
+
+        <div class="admin-form-group">
+            <label>Available Sizes (Tick if clothing, leave blank for gadgets):</label>
+            <div class="admin-sizes-checkbox-row">
+                <label><input type="checkbox" name="admSizes" value="S"> S</label>
+                <label><input type="checkbox" name="admSizes" value="M"> M</label>
+                <label><input type="checkbox" name="admSizes" value="L"> L</label>
+                <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
+                <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+            </div>
+        </div>
+
+        <!-- Sold Out Toggle Checkbox -->
+        <div class="admin-form-group">
+            <label class="soldout-checkbox-label">
+                <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
+                <span>Mark as SOLD OUT (Disable buying & show out of stock)</span>
+            </label>
+        </div>
+
+        <div class="admin-form-group">
+            <label>Product Description & Highlights *</label>
+            <textarea id="admDesc" rows="3" placeholder="Fabric, fitting, care instructions, key highlights..."></textarea>
+        </div>
+
+        <div class="admin-form-group">
+            <label>Promotional Badge</label>
+            <input type="text" id="admBadge" placeholder="e.g. Festive Drop ✨ / Bestseller 🔥">
+        </div>
+
+        <div style="display:flex; gap:10px;">
+            <div class="admin-form-group" style="flex:1;">
+                <label>Offer Price (₹) *</label>
+                <input type="number" id="admPrice" placeholder="499">
+            </div>
+            <div class="admin-form-group" style="flex:1;">
+                <label>Original MRP (₹) *</label>
+                <input type="number" id="admOrigPrice" placeholder="999">
+            </div>
+        </div>
+
+        <button class="btn-submit-product" id="publishBtn" onclick="publishProductToStore()">Publish To Live Catalog 🚀</button>
+        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="resetAdminForm()">Cancel Editing</button>
+    </div>
+
+    <!-- Product Showcase -->
+    <main class="catalog-container" id="productShowcaseGrid"></main>
+
+    <!-- Product Quick View Modal -->
+    <div class="item-modal-backdrop" id="productViewModal" onclick="closeProductModal(event)">
+        <div class="item-modal-box">
+            <button class="modal-close-ico" onclick="closeProductModal(null, true)">&times;</button>
+            <div class="modal-img-holder">
+                <img id="modalMainImg" src="" alt="Main Preview">
+            </div>
+            <div class="modal-thumbs-row" id="modalThumbnails"></div>
+
+            <div class="modal-details-body">
+                <span id="modalCategory" style="font-size:0.7rem; font-weight:700; color:var(--primary); text-transform:uppercase;"></span>
+                <h3 id="modalTitle"></h3>
+                <div class="price-wrap">
+                    <span class="price-current" id="modalPrice"></span>
+                    <span class="price-mrp" id="modalMrp"></span>
+                    <span class="price-discount" id="modalDiscount"></span>
+                </div>
+
+                <!-- Modal Size Selector -->
+                <div class="size-selector-block" id="modalSizeBlock">
+                    <label>Select Your Size (Required):</label>
+                    <div class="size-pills-row" id="modalSizePills"></div>
+                </div>
+
+                <div style="font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:4px;">Product Highlights:</div>
+                <p class="desc" id="modalDesc"></p>
+                <div class="btn-card-group" id="modalActions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-modal-backdrop" id="cartBackdrop" onclick="toggleCartDrawer(false)"></div>
+    <div class="cart-modal-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button class="cart-close-btn" onclick="toggleCartDrawer(false)">&times;</button>
+        </div>
+        <div class="cart-items-scroll" id="cartItemsList"></div>
+        <div class="cart-footer-pane">
+            <div class="checkout-address-box">
+                <input type="text" id="custName" placeholder="Full Name">
+                <input type="tel" id="custPhone" placeholder="10-Digit Mobile Number">
+                <input type="text" id="custAddress" placeholder="Delivery Address with Pincode">
+            </div>
+            <div class="cart-summary-line">
+                <span>Total Amount:</span>
+                <span id="cartSubtotalAmount">₹0</span>
+            </div>
+            <button class="btn-checkout-wa" onclick="executeWhatsAppCheckout()">
+                💬 Order via WhatsApp (COD / Details)
+            </button>
+            <button class="btn-checkout-upi" onclick="executeUpiDirectPay()">
+                ⚡ Instant Prepaid UPI (9832075153@fam)
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 <b>TrendVibe Store</b>. All rights reserved.</p>
+        <p style="margin-top: 6px;">Authentic Reseller Network • Verified Quality • Pan-India Delivery</p>
+        <span class="admin-portal-link" onclick="initiateAdminLogin()">Admin Portal 🔒</span>
+    </footer>
+
+    <!-- FIREBASE INITIALIZATION SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            setDoc,
+            deleteDoc, 
+            doc, 
+            onSnapshot, 
+            serverTimestamp, 
+            query, 
+            orderBy 
+        } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0HtHh-jYWePRqyiGWvSPBGHOwDy2EOrA",
+            authDomain: "trendvibe-store.firebaseapp.com",
+            projectId: "trendvibe-store",
+            storageBucket: "trendvibe-store.firebasestorage.app",
+            messagingSenderId: "319103175096",
+            appId: "1:319103175096:web:18e9368e4c651d08f3674d",
+            measurementId: "G-M1P2HYLSGY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const productsCol = collection(db, "products");
+
+        window.db = db;
+        window.productsCol = productsCol;
+        window.addDoc = addDoc;
+        window.setDoc = setDoc;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+        window.serverTimestamp = serverTimestamp;
+
+        // Firebase রিয়েল-টাইম লিসেনার
+        const q = query(productsCol, orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            window.products = [];
+            snapshot.forEach((d) => {
+                const item = d.data();
+                item.docId = d.id;
+                window.products.push(item);
+            });
+            window.renderCatalog();
+        }, (err) => {
+            console.error("Firestore Error:", err);
+        });
+    </script>
+
+    <!-- STORE INTERACTION SCRIPT -->
+    <script>
+        const STORE_PHONE = "919832075153";
+        const STORE_UPI_VPA = "9832075153@fam";
+        const ADMIN_SECRET = "trend123";
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let galleryCompressedImages = [];
+        let isProcessingPhotos = false;
+        let selectedProductModalSize = null;
+        let currentModalProductIndex = null;
+        let existingImagesWhileEditing = [];
+
+        let cart = JSON.parse(localStorage.getItem('tv_cart')) || [];
+        window.products = [];
+        let isAdminLoggedIn = sessionStorage.getItem('tv_admin_session') === 'active';
+
+        const showcaseGrid = document.getElementById('productShowcaseGrid');
+        const adminManagerCard = document.getElementById('adminManagerCard');
+        const headerCartCount = document.getElementById('headerCartCount');
+
+        function refreshAdminVisibility() {
+            adminManagerCard.style.display = isAdminLoggedIn ? 'block' : 'none';
+        }
+
+        function initiateAdminLogin() {
+            if (isAdminLoggedIn) {
+                alert("Already authenticated as Admin.");
+                return;
+            }
+            const entered = prompt("Enter Administrator Security Code:");
+            if (entered === ADMIN_SECRET) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('tv_admin_session', 'active');
+                refreshAdminVisibility();
+                renderCatalog();
+                alert("Admin login successful!");
+            } else if (entered !== null) {
+                alert("Incorrect code.");
+            }
+        }
+
+        function terminateAdminSession() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('tv_admin_session');
+            refreshAdminVisibility();
+            resetAdminForm();
+            renderCatalog();
+            alert("Admin signed out.");
+        }
+
+        function compressSingleImageFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 380;
+                        const scale = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scale;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const compressedUri = canvas.toDataURL('image/jpeg', 0.52);
+                        resolve(compressedUri);
+                    };
+                    img.onerror = () => reject(new Error("Image decode failed"));
+                    img.src = evt.target.result;
+                };
+                reader.onerror = () => reject(new Error("File read failed"));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function processGalleryPhotos(e) {
+            const files = Array.from(e.target.files);
+            const statusLabel = document.getElementById('galleryUploadStatus');
+            const previewBox = document.getElementById('galleryPreviewRow');
+            const publishBtn = document.getElementById('publishBtn');
+            
+            previewBox.innerHTML = '';
+            galleryCompressedImages = [];
+
+            if (files.length === 0) return;
+
+            isProcessingPhotos = true;
+            publishBtn.disabled = true;
+            publishBtn.innerText = "⏳ Processing Photos...";
+            statusLabel.style.color = '#38bdf8';
+            statusLabel.innerText = `Optimizing ${files.length} photo(s)...`;
+
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    const compressed = await compressSingleImageFile(files[i]);
+                    galleryCompressedImages.push(compressed);
+
+                    const thumb = document.createElement('img');
+                    thumb.src = compressed;
+                    previewBox.appendChild(thumb);
+                }
+
+                statusLabel.style.color = '#4ade80';
+                statusLabel.innerText = `✓ ${galleryCompressedImages.length} new photo(s) selected!`;
+            } catch (err) {
+                statusLabel.style.color = '#ef4444';
+                statusLabel.innerText = '❌ Failed to process images.';
+            } finally {
+                isProcessingPhotos = false;
+                publishBtn.disabled = false;
+                const docId = document.getElementById('editingProductDocId').value;
+                publishBtn.innerText = docId ? "Update Product 🔄" : "Publish To Live Catalog 🚀";
+            }
+        }
+
+        window.renderCatalog = function() {
+            showcaseGrid.innerHTML = '';
+
+            let filtered = window.products.filter(p => {
+                const matchCategory = currentCategory === 'all' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    (p.badge && p.badge.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                showcaseGrid.innerHTML = `
+                    <div class="empty-store-indicator">
+                        <h4 style="color:#ffffff; font-size:1.1rem; margin-bottom:6px;">No Products Found</h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">Login to Admin Portal below to upload items.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach((p, idx) => {
+                const discount = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
+                const primaryImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || '');
+                const isSoldOut = !!p.isSoldOut;
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-thumbnail-box" onclick="viewProductModal(${idx})">
+                        <img src="${primaryImg}" alt="${p.name}">
+                        ${isSoldOut ? `<span class="card-badge sold-out">SOLD OUT 🚫</span>` : (p.badge ? `<span class="card-badge">${p.badge}</span>` : '')}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category">${p.category}</span>
+                            <span class="card-rating">★ 4.9 (${p.images ? p.images.length : 1} Photos)</span>
+                        </div>
+                        <h4 class="product-title" onclick="viewProductModal(${idx})">${p.name}</h4>
+                        <div class="product-snippet">${p.desc || 'Premium quality guaranteed.'}</div>
+                        <div class="price-wrap">
+                            <span class="price-current">₹${p.price}</span>
+                            <span class="price-mrp">₹${p.origPrice}</span>
+                            <span class="price-discount">${discount}% OFF</span>
+                        </div>
+                        <div class="btn-card-group">
+                            <button class="btn-view-item" onclick="viewProductModal(${idx})">View Details 🔍</button>
+                            
+                            ${isSoldOut ? `
+                                <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                                <button class="btn-buy-instant btn-disabled" disabled>Sold Out</button>
+                            ` : `
+                                <button class="btn-add-cart" onclick="quickAddToCart(${idx})">+ Add to Cart</button>
+                                <button class="btn-buy-instant" onclick="viewProductModal(${idx})">Buy Now</button>
+                            `}
+
+                            ${isAdminLoggedIn ? `
+                                <button class="btn-edit-card" onclick="startEditingProduct(${idx})">✏️ Edit Listing & Price</button>
+                                <button class="btn-delete-card" onclick="removeProductByIndex('${p.docId}')">🗑 Delete Listing</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                showcaseGrid.appendChild(card);
+            });
+        };
+
+        function startEditingProduct(index) {
+            const p = window.products[index];
+            document.getElementById('editingProductDocId').value = p.docId;
+            document.getElementById('adminFormHeading').innerText = `Editing: ${p.name.substring(0, 22)}...`;
+            document.getElementById('admName').value = p.name;
+            document.getElementById('admCategory').value = p.category || 'fashion';
+            document.getElementById('admDesc').value = p.desc || '';
+            document.getElementById('admBadge').value = p.badge || '';
+            document.getElementById('admPrice').value = p.price;
+            document.getElementById('admOrigPrice').value = p.origPrice;
+            document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
+
+            // Checked sizes
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
+                cb.checked = p.sizes ? p.sizes.includes(cb.value) : false;
+            });
+
+            // Cache existing images
+            existingImagesWhileEditing = p.images || [p.img];
+            galleryCompressedImages = [];
+            const previewBox = document.getElementById('galleryPreviewRow');
+            previewBox.innerHTML = '';
+            existingImagesWhileEditing.forEach(imgSrc => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                previewBox.appendChild(thumb);
+            });
+            document.getElementById('galleryUploadStatus').innerText = 'Showing existing images. Upload new files if you wish to change.';
+
+            document.getElementById('publishBtn').innerText = "Update Product 🔄";
+            document.getElementById('cancelEditBtn').style.display = 'block';
+
+            adminManagerCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetAdminForm() {
+            document.getElementById('editingProductDocId').value = "";
+            document.getElementById('adminFormHeading').innerText = "Store Management Console";
+            document.getElementById('admName').value = '';
+            document.getElementById('admDesc').value = '';
+            document.getElementById('admBadge').value = '';
+            document.getElementById('admPrice').value = '';
+            document.getElementById('admOrigPrice').value = '';
+            document.getElementById('admIsSoldOut').checked = false;
+            document.getElementById('galleryFileInput').value = '';
+            document.getElementById('galleryPreviewRow').innerHTML = '';
+            document.getElementById('galleryUploadStatus').innerText = 'Tap above to select multiple photos from your mobile device';
+            document.getElementById('img1').value = '';
+            document.getElementById('img2').value = '';
+            document.getElementById('img3').value = '';
+            document.getElementById('img4').value = '';
+            document.getElementById('img5').value = '';
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => cb.checked = false);
+            galleryCompressedImages = [];
+            existingImagesWhileEditing = [];
+
+            document.getElementById('publishBtn').innerText = "Publish To Live Catalog 🚀";
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+
+        async function publishProductToStore() {
+            if (isProcessingPhotos) {
+                alert("Photos are still compressing. Please wait 2 seconds!");
+                return;
+            }
+
+            const docId = document.getElementById('editingProductDocId').value;
+            const name = document.getElementById('admName').value.trim();
+            const desc = document.getElementById('admDesc').value.trim();
+            const category = document.getElementById('admCategory').value;
+            const badge = document.getElementById('admBadge').value.trim();
+            const price = parseFloat(document.getElementById('admPrice').value);
+            const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
+            const isSoldOut = document.getElementById('admIsSoldOut').checked;
+
+            const selectedSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
+
+            const webLinks = [
+                document.getElementById('img1').value.trim(),
+                document.getElementById('img2').value.trim(),
+                document.getElementById('img3').value.trim(),
+                document.getElementById('img4').value.trim(),
+                document.getElementById('img5').value.trim()
+            ].filter(u => u.length > 0);
+
+            let finalImages = [];
+            if (galleryCompressedImages.length > 0 || webLinks.length > 0) {
+                finalImages = [...galleryCompressedImages, ...webLinks];
+            } else if (docId && existingImagesWhileEditing.length > 0) {
+                finalImages = existingImagesWhileEditing;
+            }
+
+            if (!name) {
+                alert("Please enter Product Title!");
+                return;
+            }
+            if (finalImages.length === 0) {
+                alert("Please select at least 1 image!");
+                return;
+            }
+            if (!desc) {
+                alert("Please add Product Description!");
+                return;
+            }
+            if (isNaN(price) || isNaN(origPrice)) {
+                alert("Please enter valid Offer Price and MRP!");
+                return;
+            }
+
+            const publishBtn = document.getElementById('publishBtn');
+            publishBtn.disabled = true;
+            publishBtn.innerText = "⏳ Saving to Cloud Firestore...";
+
+            try {
+                const productObj = {
+                    name,
+                    images: finalImages,
+                    desc: desc,
+                    category,
+                    sizes: selectedSizes,
+                    isSoldOut: isSoldOut,
+                    badge: badge || "Hot Drop 🔥",
+                    price,
+                    origPrice,
+                    createdAt: window.serverTimestamp ? window.serverTimestamp() : new Date()
+                };
+
+                if (docId) {
+                    await window.setDoc(window.doc(window.db, "products", docId), productObj);
+                    alert("Product details updated successfully in Cloud! 🔄");
+                } else {
+                    await window.addDoc(window.productsCol, productObj);
+                    alert("Product successfully published live to TrendVibe Cloud! 🚀");
+                }
+
+                resetAdminForm();
+            } catch (err) {
+                console.error(err);
+                alert("Cloud save failed: " + err.message);
+            } finally {
+                publishBtn.disabled = false;
+                publishBtn.innerText = "Publish To Live Catalog 🚀";
+            }
+        }
+
+        async function removeProductByIndex(docId) {
+            if (confirm("Permanently delete this product from Cloud?")) {
+                try {
+                    await window.deleteDoc(window.doc(window.db, "products", docId));
+                    alert("Product deleted from Cloud! 🗑");
+                } catch(err) {
+                    alert("Delete failed: " + err.message);
+                }
+            }
+        }
+
+        function viewProductModal(index) {
+            currentModalProductIndex = index;
+            selectedProductModalSize = null;
+            const item = window.products[index];
+            const discount = Math.round(((item.origPrice - item.price) / item.origPrice) * 100);
+            const imgList = (item.images && item.images.length > 0) ? item.images : [item.img || ''];
+            const isSoldOut = !!item.isSoldOut;
+
+            document.getElementById('modalMainImg').src = imgList[0];
+            document.getElementById('modalCategory').innerText = item.category;
+            document.getElementById('modalTitle').innerText = item.name;
+            document.getElementById('modalPrice').innerText = `₹${item.price}`;
+            document.getElementById('modalMrp').innerText = `₹${item.origPrice}`;
+            document.getElementById('modalDiscount').innerText = `${discount}% OFF`;
+            document.getElementById('modalDesc').innerText = item.desc || "Verified quality product with free express home delivery across India.";
+
+            // Thumbnails
+            const thumbsContainer = document.getElementById('modalThumbnails');
+            thumbsContainer.innerHTML = '';
+            imgList.forEach((src, i) => {
+                const thumb = document.createElement('img');
+                thumb.src = src;
+                thumb.className = `modal-thumb ${i === 0 ? 'active' : ''}`;
+                thumb.onclick = function() {
+                    document.getElementById('modalMainImg').src = src;
+                    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                };
+                thumbsContainer.appendChild(thumb);
+            });
+
+            // Size Selector
+            const sizeBlock = document.getElementById('modalSizeBlock');
+            const sizePillsContainer = document.getElementById('modalSizePills');
+            sizePillsContainer.innerHTML = '';
+
+            if (item.sizes && item.sizes.length > 0) {
+                sizeBlock.style.display = 'block';
+                selectedProductModalSize = item.sizes[0];
+
+                item.sizes.forEach((sz, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `size-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.innerText = sz;
+                    btn.onclick = function() {
+                        selectedProductModalSize = sz;
+                        document.querySelectorAll('.size-pill-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    };
+                    sizePillsContainer.appendChild(btn);
+                });
+            } else {
+                sizeBlock.style.display = 'none';
+                selectedProductModalSize = null;
+            }
+
+            const actionsBox = document.getElementById('modalActions');
+            if (isSoldOut) {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                    <button class="btn-buy-instant btn-disabled" disabled>This Item is Sold Out</button>
+                `;
+            } else {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart" onclick="confirmAddToCartFromModal(); closeProductModal(null, true);">+ Add to Cart</button>
+                    <button class="btn-buy-instant" onclick="confirmBuyNowFromModal(); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
+                `;
+            }
+
+            document.getElementById('productViewModal').style.display = 'block';
+        }
+
+        function closeProductModal(e, force = false) {
+            if (force || (e && e.target.id === 'productViewModal')) {
+                document.getElementById('productViewModal').style.display = 'none';
+            }
+        }
+
+        function quickAddToCart(index) {
+            const item = window.products[index];
+            if (item.isSoldOut) return;
+
+            if (item.sizes && item.sizes.length > 0) {
+                viewProductModal(index);
+            } else {
+                addItemToCartInternal(item, null);
+                toggleCartDrawer(true);
+            }
+        }
+
+        function confirmAddToCartFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = window.products[currentModalProductIndex];
+            if (item.isSoldOut) return;
+            addItemToCartInternal(item, selectedProductModalSize);
+            toggleCartDrawer(true);
+        }
+
+        function confirmBuyNowFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = window.products[currentModalProductIndex];
+            if (item.isSoldOut) return;
+            addItemToCartInternal(item, selectedProductModalSize);
+            toggleCartDrawer(true);
+        }
+
+        function addItemToCartInternal(item, chosenSize) {
+            const primaryImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
+            const existing = cart.find(c => c.name === item.name && c.selectedSize === chosenSize);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    name: item.name,
+                    price: item.price,
+                    img: primaryImg,
+                    selectedSize: chosenSize,
+                    qty: 1
+                });
+            }
+            syncCartState();
+        }
+
+        function applyCategoryFilter(cat, elem) {
+            document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+            elem.classList.add('active');
+            currentCategory = cat;
+            renderCatalog();
+        }
+
+        function handleLiveSearch() {
+            searchQuery = document.getElementById('storeSearchInput').value.trim();
+            renderCatalog();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            syncCartState();
+        }
+
+        function syncCartState() {
+            localStorage.setItem('tv_cart', JSON.stringify(cart));
+            const totalCount = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            headerCartCount.innerText = totalCount;
+            renderCartDrawer();
+        }
+
+        function renderCartDrawer() {
+            const listContainer = document.getElementById('cartItemsList');
+            const subtotalBox = document.getElementById('cartSubtotalAmount');
+            listContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center;color:var(--text-muted);margin:auto;">Your shopping cart is empty.</p>';
+                subtotalBox.innerText = '₹0';
+                return;
+            }
+
+            let subtotal = 0;
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+
+                const row = document.createElement('div');
+                row.className = 'cart-row-item';
+                row.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h5>${item.name}</h5>
+                        ${item.selectedSize ? `<span class="cart-item-size-badge">Size: ${item.selectedSize}</span>` : ''}
+                        <div style="font-size:0.75rem; color:var(--primary); font-weight:700;">₹${item.price} each</div>
+                        <div class="cart-qty-ctrl">
+                            <button class="qty-btn" onclick="updateCartQty(${i}, -1)">-</button>
+                            <span style="font-size:0.8rem; font-weight:700;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateCartQty(${i}, 1)">+</button>
+                        </div>
+                    </div>
+                    <span style="font-weight:800; font-size:0.85rem; color:#fff;">₹${itemTotal}</span>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            subtotalBox.innerText = `₹${subtotal}`;
+        }
+
+        function toggleCartDrawer(open) {
+            const backdrop = document.getElementById('cartBackdrop');
+            const drawer = document.getElementById('cartDrawer');
+            if (open) {
+                backdrop.classList.add('open');
+                drawer.classList.add('open');
+            } else {
+                backdrop.classList.remove('open');
+                drawer.classList.remove('open');
+            }
+        }
+
+        function executeWhatsAppCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            let total = 0;
+            let itemsText = "";
+            cart.forEach(c => {
+                const sub = c.price * c.qty;
+                total += sub;
+                const sizeTag = c.selectedSize ? ` [Size: ${c.selectedSize}]` : '';
+                itemsText += `• ${c.name}${sizeTag} (Qty: ${c.qty}) - ₹${sub}\n`;
+            });
+
+            let message = `*NEW ORDER - TRENDVIBE STORE*\n`;
+            message += `----------------------------\n`;
+            message += `${itemsText}`;
+            message += `----------------------------\n`;
+            message += `*Total Amount:* ₹${total}\n\n`;
+            message += `*Customer Details:*\n`;
+            message += `Name: ${name || 'Not provided'}\n`;
+            message += `Mobile: ${phone || 'Not provided'}\n`;
+            message += `Address: ${address || 'Not provided'}\n\n`;
+            message += `Please confirm my order delivery details!`;
+
+            const waUrl = `https://wa.me/${STORE_PHONE}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function executeUpiDirectPay() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const total = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+            const orderRef = "TV" + Math.floor(100000 + Math.random() * 900000);
+            const upiUrl = `upi://pay?pa=${STORE_UPI_VPA}&pn=TrendVibe%20Store&am=${total}&cu=INR&tn=Order%20${orderRef}`;
+            
+            window.location.href = upiUrl;
+        }
+
+        refreshAdminVisibility();
+        syncCartState();
+    </script>
 </body>
-</html>
+              </html>
