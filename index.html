@@ -84,6 +84,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            user-select: none;
         }
 
         .brand-logo img {
@@ -92,6 +93,12 @@
             border-radius: 50%;
             object-fit: cover;
             border: 1.5px solid var(--primary);
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .brand-logo img:active {
+            transform: scale(0.92);
         }
 
         .brand-logo span {
@@ -724,15 +731,50 @@
             font-size: 0.85rem;
         }
 
-        /* Admin Manager */
-        #adminManagerCard {
+        /* ===================================================
+           SECRET ADMIN MODAL WINDOW (FLOATING DIALOG)
+        =================================================== */
+        .admin-modal-backdrop {
             display: none;
-            max-width: 520px;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 250;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .admin-modal-backdrop.open {
+            display: block;
+        }
+
+        #adminManagerCard {
+            max-width: 540px;
             margin: 20px auto;
-            padding: 22px;
+            padding: 24px;
             background: var(--surface-elevated);
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary);
             border-radius: var(--radius-lg);
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        .admin-modal-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .admin-form-group {
@@ -1077,15 +1119,6 @@
             color: var(--text-muted);
         }
 
-        .admin-portal-link {
-            color: #475569;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 0.72rem;
-            display: inline-block;
-            margin-top: 12px;
-        }
-
         @media (max-width: 600px) {
             .tvs-cert-title { font-size: 16px; }
             .tvs-brand-name { font-size: 22px; }
@@ -1099,11 +1132,13 @@
         ⚡ FREE ALL-INDIA SHIPPING | PREPAID UPI & CASH ON DELIVERY (COD) ⚡
     </div>
 
+    <!-- Header (Secret Logo Trigger inside) -->
     <header>
-        <a href="#" class="brand-logo">
-            <img src="logo.png" alt="TrendVibe Logo">
+        <div class="brand-logo">
+            <!-- SECRET TRIGGER: Tap on this logo image 3 times fast to open Admin Portal -->
+            <img src="logo.png" alt="TrendVibe Logo" id="secretLogoTrigger" onclick="handleSecretLogoTrigger()">
             <span>TrendVibe <span>Store</span></span>
-        </a>
+        </div>
         <button class="cart-trigger-btn" onclick="toggleCartDrawer(true)">
             <span>🛒 Cart</span>
             <span class="cart-counter-badge" id="headerCartCount">0</span>
@@ -1132,7 +1167,7 @@
         </div>
     </div>
 
-    <!-- EXPANDED CATEGORY FILTER BAR -->
+    <!-- Category Filters -->
     <div class="category-filter-row">
         <button class="filter-chip active" onclick="applyCategoryFilter('all', this)">All Drops 🔥</button>
         <button class="filter-chip" onclick="applyCategoryFilter('shoes', this)">Shoes & Footwear 👟</button>
@@ -1145,108 +1180,111 @@
         <button class="filter-chip" onclick="applyCategoryFilter('decor', this)">Room Decor & Living 🏠</button>
     </div>
 
-    <!-- Admin Console -->
-    <div id="adminManagerCard">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-            <h4 style="color:var(--primary);" id="adminFormHeading">Store Management Console</h4>
-            <button onclick="terminateAdminSession()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:700;">Logout</button>
-        </div>
-        
-        <input type="hidden" id="editingProductDocId" value="">
-
-        <div class="admin-form-group">
-            <label>Product Title *</label>
-            <input type="text" id="admName" placeholder="e.g. Trendy Casual Sneakers / Bridal Chooda Set">
-        </div>
-
-        <div class="admin-form-group">
-            <label>📁 Option A: Choose Images from Phone Gallery</label>
-            <div class="gallery-upload-card">
-                <input type="file" id="galleryFileInput" accept="image/*" multiple onchange="processGalleryPhotos(event)">
-                <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select photos from phone (Leave empty if keeping existing images)</div>
-                <div class="gallery-preview-row" id="galleryPreviewRow"></div>
+    <!-- ================= FLOATING ADMIN MODAL ================= -->
+    <div class="admin-modal-backdrop" id="adminModalBackdrop">
+        <div id="adminManagerCard">
+            <button class="admin-modal-close-btn" onclick="closeAdminModalWindow()">&times;</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-right:30px;">
+                <h4 style="color:var(--primary);" id="adminFormHeading">Store Management Console</h4>
+                <button onclick="terminateAdminSession()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:700;">Logout</button>
             </div>
-        </div>
+            
+            <input type="hidden" id="editingProductDocId" value="">
 
-        <div class="admin-form-group">
-            <label>🔗 Option B: Or Paste Image URLs (Meesho / Web)</label>
-            <div class="image-url-inputs">
-                <input type="url" id="img1" placeholder="Image 1 URL (Main Cover Image)">
-                <input type="url" id="img2" placeholder="Image 2 URL (Angle / Detail)">
-                <input type="url" id="img3" placeholder="Image 3 URL">
-                <input type="url" id="img4" placeholder="Image 4 URL">
-                <input type="url" id="img5" placeholder="Image 5 URL">
+            <div class="admin-form-group">
+                <label>Product Title *</label>
+                <input type="text" id="admName" placeholder="e.g. Trendy Casual Sneakers / Bridal Chooda Set">
             </div>
-        </div>
 
-        <div class="admin-form-group">
-            <label>Department Category *</label>
-            <select id="admCategory">
-                <option value="shoes">Shoes & Footwear 👟</option>
-                <option value="fashion">Streetwear & Fashion 👗</option>
-                <option value="beauty">Beauty & Perfumes 🧴</option>
-                <option value="gadgets">Mini Gadgets ⚡</option>
-                <option value="jewelry">Aesthetic Jewelry 💍</option>
-                <option value="bags">Bags & Wallets 🎒</option>
-                <option value="eyewear">Eyewear & Shades 🕶️</option>
-                <option value="decor">Room Decor & Living 🏠</option>
-            </select>
-        </div>
-
-        <div class="admin-form-group">
-            <label>🎨 Available Colors (Comma separated, e.g. White, Black, Navy, Brown):</label>
-            <input type="text" id="admColors" placeholder="White, Black, Navy, Brown">
-        </div>
-
-        <div class="admin-form-group">
-            <label>📏 Standard Clothing Sizes (Tick if applicable):</label>
-            <div class="admin-sizes-checkbox-row">
-                <label><input type="checkbox" name="admSizes" value="S"> S</label>
-                <label><input type="checkbox" name="admSizes" value="M"> M</label>
-                <label><input type="checkbox" name="admSizes" value="L"> L</label>
-                <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
-                <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+            <div class="admin-form-group">
+                <label>📁 Option A: Choose Images from Phone Gallery</label>
+                <div class="gallery-upload-card">
+                    <input type="file" id="galleryFileInput" accept="image/*" multiple onchange="processGalleryPhotos(event)">
+                    <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select photos from phone (Leave empty if keeping existing images)</div>
+                    <div class="gallery-preview-row" id="galleryPreviewRow"></div>
+                </div>
             </div>
-            <label style="margin-top:6px;">Or Custom Sizes (For Shoes UK 6, 7, 8 / Bangles / Perfume ML):</label>
-            <input type="text" id="admCustomSizes" placeholder="UK 6, UK 7, UK 8, UK 9 or 2.4, 2.6, 2.8 or 50ml, 100ml">
-        </div>
 
-        <div class="admin-form-group">
-            <label class="soldout-checkbox-label">
-                <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
-                <span>Mark as SOLD OUT (Disable buying & show out of stock)</span>
-            </label>
-        </div>
-
-        <div class="admin-form-group">
-            <label>Product Description & Highlights *</label>
-            <textarea id="admDesc" rows="3" placeholder="Highlights, material, sole quality, care instructions..."></textarea>
-        </div>
-
-        <div class="admin-form-group">
-            <label>Promotional Badge</label>
-            <input type="text" id="admBadge" placeholder="e.g. Bestseller 🔥 / Sneaker Drop 👟">
-        </div>
-
-        <div style="display:flex; gap:10px;">
-            <div class="admin-form-group" style="flex:1;">
-                <label>Offer Price (₹) *</label>
-                <input type="number" id="admPrice" placeholder="399">
+            <div class="admin-form-group">
+                <label>🔗 Option B: Or Paste Image URLs (Meesho / Web)</label>
+                <div class="image-url-inputs">
+                    <input type="url" id="img1" placeholder="Image 1 URL (Main Cover Image)">
+                    <input type="url" id="img2" placeholder="Image 2 URL (Angle / Detail)">
+                    <input type="url" id="img3" placeholder="Image 3 URL">
+                    <input type="url" id="img4" placeholder="Image 4 URL">
+                    <input type="url" id="img5" placeholder="Image 5 URL">
+                </div>
             </div>
-            <div class="admin-form-group" style="flex:1;">
-                <label>Original MRP (₹) *</label>
-                <input type="number" id="admOrigPrice" placeholder="999">
-            </div>
-        </div>
 
-        <button class="btn-submit-product" id="publishBtn" onclick="publishProductToStore()">Publish To Live Catalog 🚀</button>
-        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="resetAdminForm()">Cancel Editing</button>
+            <div class="admin-form-group">
+                <label>Department Category *</label>
+                <select id="admCategory">
+                    <option value="shoes">Shoes & Footwear 👟</option>
+                    <option value="fashion">Streetwear & Fashion 👗</option>
+                    <option value="beauty">Beauty & Perfumes 🧴</option>
+                    <option value="gadgets">Mini Gadgets ⚡</option>
+                    <option value="jewelry">Aesthetic Jewelry 💍</option>
+                    <option value="bags">Bags & Wallets 🎒</option>
+                    <option value="eyewear">Eyewear & Shades 🕶️</option>
+                    <option value="decor">Room Decor & Living 🏠</option>
+                </select>
+            </div>
+
+            <div class="admin-form-group">
+                <label>🎨 Available Colors (Comma separated, e.g. White, Black, Navy, Brown):</label>
+                <input type="text" id="admColors" placeholder="White, Black, Navy, Brown">
+            </div>
+
+            <div class="admin-form-group">
+                <label>📏 Standard Clothing Sizes (Tick if applicable):</label>
+                <div class="admin-sizes-checkbox-row">
+                    <label><input type="checkbox" name="admSizes" value="S"> S</label>
+                    <label><input type="checkbox" name="admSizes" value="M"> M</label>
+                    <label><input type="checkbox" name="admSizes" value="L"> L</label>
+                    <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
+                    <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+                </div>
+                <label style="margin-top:6px;">Or Custom Sizes (For Shoes UK 6, 7, 8 / Bangles / Perfume ML):</label>
+                <input type="text" id="admCustomSizes" placeholder="UK 6, UK 7, UK 8, UK 9 or 2.4, 2.6, 2.8 or 50ml, 100ml">
+            </div>
+
+            <div class="admin-form-group">
+                <label class="soldout-checkbox-label">
+                    <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
+                    <span>Mark as SOLD OUT (Disable buying & show out of stock)</span>
+                </label>
+            </div>
+
+            <div class="admin-form-group">
+                <label>Product Description & Highlights *</label>
+                <textarea id="admDesc" rows="3" placeholder="Highlights, material, sole quality, care instructions..."></textarea>
+            </div>
+
+            <div class="admin-form-group">
+                <label>Promotional Badge</label>
+                <input type="text" id="admBadge" placeholder="e.g. Bestseller 🔥 / Sneaker Drop 👟">
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <div class="admin-form-group" style="flex:1;">
+                    <label>Offer Price (₹) *</label>
+                    <input type="number" id="admPrice" placeholder="399">
+                </div>
+                <div class="admin-form-group" style="flex:1;">
+                    <label>Original MRP (₹) *</label>
+                    <input type="number" id="admOrigPrice" placeholder="999">
+                </div>
+            </div>
+
+            <button class="btn-submit-product" id="publishBtn" onclick="publishProductToStore()">Publish To Live Catalog 🚀</button>
+            <button class="btn-cancel-edit" id="cancelEditBtn" onclick="resetAdminForm()">Cancel Editing</button>
+        </div>
     </div>
 
     <!-- Product Showcase Grid -->
     <main class="catalog-container" id="productShowcaseGrid"></main>
 
-    <!-- Certificate of Trust & Authenticity -->
+    <!-- Certificate of Trust & Authenticity Section -->
     <section class="tvs-cert-wrapper">
         <div class="tvs-cert-card">
             <div class="tvs-cert-inner-border">
@@ -1371,10 +1409,9 @@
     <footer>
         <p>© 2026 <b>TrendVibe Store</b>. All rights reserved.</p>
         <p style="margin-top: 6px;">Authentic Reseller Network • Verified Quality • Pan-India Delivery</p>
-        <span class="admin-portal-link" onclick="initiateAdminLogin()">Admin Portal 🔒</span>
     </footer>
 
-    <!-- FIREBASE INITIALIZATION SCRIPT (Your Live Database) -->
+    <!-- FIREBASE INITIALIZATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
         import { 
@@ -1429,8 +1466,8 @@
     <!-- STORE INTERACTION SCRIPT -->
     <script>
         const STORE_PHONE = "919832075153";
-        const STORE_UPI_VPA = "9832075153@fam"; // Apnar original UPI
-        const ADMIN_SECRET = "TVS123";          // Apnar notun password TVS123
+        const STORE_UPI_VPA = "9832075153@fam";
+        const ADMIN_SECRET = "TVS123";
 
         let currentCategory = 'all';
         let searchQuery = '';
@@ -1446,37 +1483,63 @@
         let isAdminLoggedIn = sessionStorage.getItem('tv_admin_session') === 'active';
 
         const showcaseGrid = document.getElementById('productShowcaseGrid');
-        const adminManagerCard = document.getElementById('adminManagerCard');
+        const adminModalBackdrop = document.getElementById('adminModalBackdrop');
         const headerCartCount = document.getElementById('headerCartCount');
 
-        function refreshAdminVisibility() {
-            adminManagerCard.style.display = isAdminLoggedIn ? 'block' : 'none';
+        // ==========================================
+        // SECRET TRIPLE-TAP TRIGGER ON LOGO
+        // ==========================================
+        let logoTapCount = 0;
+        let logoTapTimer = null;
+
+        function handleSecretLogoTrigger() {
+            logoTapCount++;
+            clearTimeout(logoTapTimer);
+
+            if (logoTapCount === 3) {
+                logoTapCount = 0;
+                initiateAdminSecretAccess();
+            } else {
+                logoTapTimer = setTimeout(() => {
+                    logoTapCount = 0;
+                }, 600); // 600ms er moddhe 3-bar tap korte hobe
+            }
         }
 
-        function initiateAdminLogin() {
+        function initiateAdminSecretAccess() {
             if (isAdminLoggedIn) {
-                alert("Already authenticated as Admin.");
+                openAdminModalWindow();
                 return;
             }
-            const entered = prompt("Enter Administrator Security Code:");
+
+            const entered = prompt("Enter Security Passcode:");
             if (entered === ADMIN_SECRET) {
                 isAdminLoggedIn = true;
                 sessionStorage.setItem('tv_admin_session', 'active');
-                refreshAdminVisibility();
                 renderCatalog();
-                alert("Admin login successful!");
+                openAdminModalWindow();
             } else if (entered !== null) {
-                alert("Incorrect code.");
+                alert("Access Denied!");
             }
+        }
+
+        function openAdminModalWindow() {
+            adminModalBackdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminModalWindow() {
+            adminModalBackdrop.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            resetAdminForm();
         }
 
         function terminateAdminSession() {
             isAdminLoggedIn = false;
             sessionStorage.removeItem('tv_admin_session');
-            refreshAdminVisibility();
-            resetAdminForm();
+            closeAdminModalWindow();
             renderCatalog();
-            alert("Admin signed out.");
+            alert("Admin session signed out.");
         }
 
         function compressSingleImageFile(file) {
@@ -1559,7 +1622,7 @@
                 showcaseGrid.innerHTML = `
                     <div class="empty-store-indicator">
                         <h4 style="color:#ffffff; font-size:1.1rem; margin-bottom:6px;">No Products Found</h4>
-                        <p style="color:var(--text-muted); font-size:0.85rem;">Login to Admin Portal below to upload items in this category.</p>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">Items will appear here shortly.</p>
                     </div>
                 `;
                 return;
@@ -1648,7 +1711,7 @@
             document.getElementById('publishBtn').innerText = "Update Product 🔄";
             document.getElementById('cancelEditBtn').style.display = 'block';
 
-            adminManagerCard.scrollIntoView({ behavior: 'smooth' });
+            openAdminModalWindow();
         }
 
         function resetAdminForm() {
@@ -1760,7 +1823,7 @@
                     alert("Product successfully published live to TrendVibe Cloud! 🚀");
                 }
 
-                resetAdminForm();
+                closeAdminModalWindow();
             } catch (err) {
                 console.error(err);
                 alert("Cloud save failed: " + err.message);
@@ -2060,8 +2123,7 @@
             window.location.href = upiUrl;
         }
 
-        refreshAdminVisibility();
         syncCartState();
     </script>
 </body>
-                          </html>
+                    </html>
