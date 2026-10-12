@@ -232,6 +232,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 14px;
+            min-height: 380px;
         }
 
         @media (min-width: 768px) {
@@ -239,6 +240,31 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
+        }
+
+        /* Shimmer Loading Skeleton */
+        .skeleton-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .skeleton-shimmer {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(56,189,248,0.08) 50%, rgba(255,255,255,0.02) 75%);
+            background-size: 200% 100%;
+            animation: shimmerAnim 1.4s infinite ease-in-out;
+        }
+
+        @keyframes shimmerAnim {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         .product-card {
@@ -731,9 +757,7 @@
             font-size: 0.85rem;
         }
 
-        /* ===================================================
-           SECRET ADMIN MODAL WINDOW (FLOATING DIALOG)
-        =================================================== */
+        /* Secret Admin Floating Modal */
         .admin-modal-backdrop {
             display: none;
             position: fixed;
@@ -916,9 +940,7 @@
             border: 1px dashed var(--border);
         }
 
-        /* ===================================================
-           CERTIFICATE OF TRUST & AUTHENTICITY STYLING
-        =================================================== */
+        /* Certificate Section */
         .tvs-cert-wrapper {
             display: flex;
             justify-content: center;
@@ -1110,13 +1132,33 @@
             color: #94a3b8;
         }
 
+        /* Enhanced Footer with Email & Support */
         footer {
             text-align: center;
-            padding: 30px 16px;
+            padding: 34px 16px;
             border-top: 1px solid var(--border);
             margin-top: 20px;
             font-size: 0.78rem;
             color: var(--text-muted);
+            background: rgba(9, 13, 22, 0.95);
+        }
+
+        .footer-support-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 14px;
+        }
+
+        .footer-support-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 600px) {
@@ -1132,10 +1174,9 @@
         ⚡ FREE ALL-INDIA SHIPPING | PREPAID UPI & CASH ON DELIVERY (COD) ⚡
     </div>
 
-    <!-- Header (Secret Logo Trigger inside) -->
+    <!-- Header (Secret Logo Trigger: Tap logo 3 times fast) -->
     <header>
         <div class="brand-logo">
-            <!-- SECRET TRIGGER: Tap on this logo image 3 times fast to open Admin Portal -->
             <img src="logo.png" alt="TrendVibe Logo" id="secretLogoTrigger" onclick="handleSecretLogoTrigger()">
             <span>TrendVibe <span>Store</span></span>
         </div>
@@ -1180,7 +1221,7 @@
         <button class="filter-chip" onclick="applyCategoryFilter('decor', this)">Room Decor & Living 🏠</button>
     </div>
 
-    <!-- ================= FLOATING ADMIN MODAL ================= -->
+    <!-- Secret Floating Admin Modal -->
     <div class="admin-modal-backdrop" id="adminModalBackdrop">
         <div id="adminManagerCard">
             <button class="admin-modal-close-btn" onclick="closeAdminModalWindow()">&times;</button>
@@ -1193,7 +1234,7 @@
 
             <div class="admin-form-group">
                 <label>Product Title *</label>
-                <input type="text" id="admName" placeholder="e.g. Trendy Casual Sneakers / Bridal Chooda Set">
+                <input type="text" id="admName" placeholder="e.g. Trendy Casual Sneakers / Floral Crepe Dress">
             </div>
 
             <div class="admin-form-group">
@@ -1243,6 +1284,7 @@
                     <label><input type="checkbox" name="admSizes" value="L"> L</label>
                     <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
                     <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+                    <label><input type="checkbox" name="admSizes" value="XXXL"> XXXL</label>
                 </div>
                 <label style="margin-top:6px;">Or Custom Sizes (For Shoes UK 6, 7, 8 / Bangles / Perfume ML):</label>
                 <input type="text" id="admCustomSizes" placeholder="UK 6, UK 7, UK 8, UK 9 or 2.4, 2.6, 2.8 or 50ml, 100ml">
@@ -1281,10 +1323,10 @@
         </div>
     </div>
 
-    <!-- Product Showcase Grid -->
+    <!-- Product Showcase Grid (Cached or Shimmer Skeleton Loaded) -->
     <main class="catalog-container" id="productShowcaseGrid"></main>
 
-    <!-- Certificate of Trust & Authenticity Section -->
+    <!-- Certificate of Trust & Authenticity -->
     <section class="tvs-cert-wrapper">
         <div class="tvs-cert-card">
             <div class="tvs-cert-inner-border">
@@ -1406,12 +1448,17 @@
         </div>
     </div>
 
+    <!-- Official Store Footer -->
     <footer>
+        <div class="footer-support-card">
+            <span>✉️ Official Support & Help:</span>
+            <a href="mailto:trendvibestore35@gmail.com">trendvibestore35@gmail.com</a>
+        </div>
         <p>© 2026 <b>TrendVibe Store</b>. All rights reserved.</p>
         <p style="margin-top: 6px;">Authentic Reseller Network • Verified Quality • Pan-India Delivery</p>
     </footer>
 
-    <!-- FIREBASE INITIALIZATION SCRIPT -->
+    <!-- FIREBASE INITIALIZATION SCRIPT (With Instant Caching) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
         import { 
@@ -1457,6 +1504,8 @@
                 item.docId = d.id;
                 window.products.push(item);
             });
+            // Instant 0-second cache update for next visitor sessions
+            localStorage.setItem('tv_cached_products', JSON.stringify(window.products));
             window.renderCatalog();
         }, (err) => {
             console.error("Firestore Error:", err);
@@ -1479,12 +1528,26 @@
         let existingImagesWhileEditing = [];
 
         let cart = JSON.parse(localStorage.getItem('tv_cart')) || [];
-        window.products = [];
+        
+        // 0-SECOND INSTANT DISPLAY: Cache theke load korbe prothom shot-ei
+        window.products = JSON.parse(localStorage.getItem('tv_cached_products')) || [];
         let isAdminLoggedIn = sessionStorage.getItem('tv_admin_session') === 'active';
 
         const showcaseGrid = document.getElementById('productShowcaseGrid');
         const adminModalBackdrop = document.getElementById('adminModalBackdrop');
         const headerCartCount = document.getElementById('headerCartCount');
+
+        // Shimmer skeletons jodi prothom bar phone-e kono cache na thake
+        function renderLoadingSkeletons() {
+            if (window.products.length === 0) {
+                showcaseGrid.innerHTML = `
+                    <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
+                `;
+            }
+        }
 
         // ==========================================
         // SECRET TRIPLE-TAP TRIGGER ON LOGO
@@ -1502,7 +1565,7 @@
             } else {
                 logoTapTimer = setTimeout(() => {
                     logoTapCount = 0;
-                }, 600); // 600ms er moddhe 3-bar tap korte hobe
+                }, 600);
             }
         }
 
@@ -1687,7 +1750,7 @@
             document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
             document.getElementById('admColors').value = (p.colors || []).join(', ');
 
-            const standardSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+            const standardSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
             let customSizes = [];
             document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
                 cb.checked = p.sizes ? p.sizes.includes(cb.value) : false;
@@ -2123,6 +2186,12 @@
             window.location.href = upiUrl;
         }
 
+        // Init Sequence: Instant cached catalog ba animated skeletons
+        if (window.products.length > 0) {
+            renderCatalog();
+        } else {
+            renderLoadingSkeletons();
+        }
         syncCartState();
     </script>
 </body>
