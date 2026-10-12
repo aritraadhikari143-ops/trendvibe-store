@@ -1,1187 +1,2067 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrendVibe Store | Premium Lifestyle Collection</title>
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-dark: #07090e;
-      --bg-card: #0f172a;
-      --bg-card-hover: #1e293b;
-      --neon-cyan: #00f2fe;
-      --neon-blue: #4facfe;
-      --neon-purple: #9b51e0;
-      --accent-pink: #ec4899;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --gold: #fbbf24;
-      --emerald: #10b981;
-      --border-glow: rgba(0, 242, 254, 0.25);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Outfit', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background: var(--bg-dark);
-      color: var(--text-main);
-      overflow-x: hidden;
-      padding-bottom: 70px;
-    }
-
-    /* Top Navbar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(11, 17, 30, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-glow);
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .brand-logo-badge {
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-      color: #000;
-      font-weight: 900;
-      font-size: 14px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      letter-spacing: 1px;
-    }
-
-    .brand-logo-text {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, #fff, var(--neon-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-nav-icon {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-nav-icon:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px var(--border-glow);
-    }
-
-    .cart-counter {
-      background: var(--accent-pink);
-      color: #fff;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 12px;
-      font-weight: bold;
-    }
-
-    /* Hero Banner */
-    .hero-banner {
-      background: linear-gradient(180deg, rgba(0, 242, 254, 0.08) 0%, transparent 100%);
-      padding: 24px 16px 12px;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #ffffff, var(--neon-cyan), var(--neon-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-tagline {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      letter-spacing: 1.5px;
-    }
-
-    .store-domain-pill {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--neon-cyan);
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.3);
-      padding: 4px 12px;
-      border-radius: 20px;
-      text-decoration: none;
-    }
-
-    /* Search & Filter */
-    .search-filter-wrapper {
-      padding: 12px 16px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .search-box {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 12px 16px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    .search-box:focus {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px var(--border-glow);
-    }
-
-    .category-scroll {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 12px 0 6px 0;
-      scrollbar-width: none;
-    }
-
-    .category-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .cat-pill {
-      white-space: nowrap;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 24px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .cat-pill.active {
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
-      color: #000;
-      border-color: var(--neon-cyan);
-      font-weight: 700;
-      box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
-    }
-
-    /* Product Grid */
-    .catalog-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 16px;
-    }
-
-    .product-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: 0.2s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--neon-cyan);
-      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.15);
-    }
-
-    .card-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: linear-gradient(135deg, var(--accent-pink), #f43f5e);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      z-index: 2;
-    }
-
-    .card-img-wrap {
-      width: 100%;
-      height: 250px;
-      background: #060911;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .card-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: 0.3s ease;
-    }
-
-    .product-card:hover .card-img {
-      transform: scale(1.05);
-    }
-
-    .card-details {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .card-cat {
-      font-size: 11px;
-      color: var(--neon-cyan);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.35;
-      color: var(--text-main);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-
-    .card-pricing {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .current-price {
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .mrp-price {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-decoration: line-through;
-    }
-
-    .discount-tag {
-      font-size: 11px;
-      color: var(--emerald);
-      font-weight: 700;
-    }
-
-    .card-actions {
-      margin-top: auto;
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-view-quick {
-      flex: 1;
-      background: transparent;
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .btn-view-quick:hover {
-      background: var(--neon-cyan);
-      color: #000;
-    }
-
-    .btn-add-cart-fast {
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
-      border: none;
-      color: #000;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    /* Modals */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-dialog {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 16px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 24px;
-      position: relative;
-    }
-
-    .modal-close-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    /* Cart Drawer */
-    .cart-drawer {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 380px;
-      height: 100%;
-      background: #0a0f1d;
-      border-left: 1px solid var(--border-glow);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      transition: right 0.3s ease;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-    }
-
-    .cart-drawer.open {
-      right: 0;
-    }
-
-    .cart-header {
-      padding: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cart-body {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-    }
-
-    .cart-footer {
-      padding: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      background: #070a14;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    .cart-item-img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .btn-checkout-upi {
-      width: 100%;
-      background: linear-gradient(135deg, #00f2fe, #4facfe);
-      border: none;
-      color: #000;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-checkout-cod {
-      width: 100%;
-      background: #25d366;
-      border: none;
-      color: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Certificate Section */
-    .tvs-cert-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 16px;
-      margin-top: 20px;
-    }
-
-    .tvs-cert-card {
-      max-width: 760px;
-      width: 100%;
-      background: #080d1a;
-      border: 3px solid var(--neon-cyan);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 10px 45px rgba(0, 242, 254, 0.2), inset 0 0 30px rgba(0, 242, 254, 0.08);
-      position: relative;
-    }
-
-    .tvs-cert-inner-border {
-      border: 1.5px dashed rgba(255, 255, 255, 0.22);
-      border-radius: 12px;
-      padding: 32px 20px;
-      text-align: center;
-    }
-
-    .tvs-reg-no {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--neon-cyan);
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.25);
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-
-    .tvs-cert-title {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #ffffff;
-      margin-bottom: 4px;
-    }
-
-    .tvs-cert-subtitle {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .tvs-present-text {
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: #94a3b8;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .tvs-brand-name {
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      margin: 0;
-      background: linear-gradient(90deg, #00f2fe, #4facfe, #9b51e0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-    }
-
-    .tvs-brand-link {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--neon-cyan);
-      text-decoration: none;
-      opacity: 0.9;
-    }
-
-    .tvs-cert-statement {
-      font-size: 12px;
-      line-height: 1.6;
-      max-width: 550px;
-      margin: 16px auto 26px auto;
-      color: #cbd5e1;
-      letter-spacing: 0.5px;
-    }
-
-    .tvs-cert-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-      text-align: left;
-      margin-bottom: 30px;
-    }
-
-    .tvs-cert-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 12px 14px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .tvs-cert-item .tvs-icon {
-      color: var(--neon-cyan);
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .tvs-cert-item p {
-      margin: 0;
-      font-size: 12px;
-      color: #e2e8f0;
-      line-height: 1.4;
-    }
-
-    .tvs-cert-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 24px;
-    }
-
-    .tvs-badge-box, .tvs-status-box, .tvs-sign-box {
-      flex: 1;
-      min-width: 140px;
-    }
-
-    .tvs-gold-seal {
-      display: inline-block;
-      background: linear-gradient(135deg, #ffd700, #f59e0b);
-      color: #000;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 6px 14px;
-      border-radius: 50px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-    }
-
-    .tvs-badge-label {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: #94a3b8;
-      margin-top: 5px;
-    }
-
-    .tvs-status-pill {
-      display: inline-block;
-      font-size: 11px;
-      color: var(--emerald);
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-bottom: 4px;
-      font-weight: 600;
-    }
-
-    .tvs-status-box small {
-      display: block;
-      font-size: 10px;
-      color: #64748b;
-      letter-spacing: 1px;
-    }
-
-    .tvs-sign-line {
-      font-family: 'Great Vibes', cursive, sans-serif;
-      font-size: 26px;
-      color: var(--neon-cyan);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-      padding-bottom: 2px;
-      margin-bottom: 4px;
-    }
-
-    .tvs-sign-label {
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: #94a3b8;
-    }
-
-    /* Admin Styles */
-    .admin-form-group {
-      margin-bottom: 12px;
-    }
-    .admin-form-group label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-    .admin-input, .admin-select, .admin-textarea {
-      width: 100%;
-      background: #090e1a;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-    }
-    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
-      border-color: var(--neon-cyan);
-    }
-
-    @media (max-width: 600px) {
-      .catalog-container { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-      .card-img-wrap { height: 180px; }
-      .card-details { padding: 10px; }
-      .card-title { font-size: 12px; }
-      .current-price { font-size: 15px; }
-      .tvs-cert-title { font-size: 16px; }
-      .tvs-brand-name { font-size: 22px; }
-      .tvs-cert-footer { flex-direction: column; text-align: center; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TrendVibe Store | Premium Aesthetic Drops & Tech Gear</title>
+    
+    <!-- Favicon & Search Engine Icons -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <meta name="google-site-verification" content="GjkDVxlF89ErQQna7F4b9hooM-_l5DV1UcBBQlpfTKM" />
+    <meta name="description" content="Shop viral minimalist jewelry, smart pocket gadgets, and aesthetic streetwear drops. Free Express Shipping, UPI & Cash on Delivery across India.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #090d16;
+            --surface: #111827;
+            --surface-elevated: #1f293d;
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.25);
+            --accent: #a855f7;
+            --whatsapp: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text-head: #ffffff;
+            --text-body: #e2e8f0;
+            --text-muted: #94a3b8;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            overflow-x: hidden;
+            padding-bottom: 90px;
+        }
+
+        .marquee-strip {
+            background: linear-gradient(90deg, #0284c7, #9333ea);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 8px 12px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 80;
+            background: rgba(9, 13, 22, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-head);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--primary);
+        }
+
+        .brand-logo span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cart-trigger-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-head);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-counter-badge {
+            background: var(--primary);
+            color: #000;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 99px;
+        }
+
+        .search-container {
+            padding: 16px 18px 8px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .search-box-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #ffffff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 900px;
+            margin: 14px auto;
+            padding: 0 18px;
+        }
+
+        .value-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 6px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .value-card .value-ico {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .value-card p {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-body);
+        }
+
+        .category-filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 18px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            scrollbar-width: none;
+        }
+        .category-filter-row::-webkit-scrollbar { display: none; }
+
+        .filter-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .filter-chip.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            font-weight: 700;
+        }
+
+        .catalog-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .catalog-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-thumbnail-box {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            background: #1e293b;
+            cursor: pointer;
+        }
+
+        .product-thumbnail-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            color: #facc15;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+        }
+
+        .card-badge.sold-out {
+            background: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            border-color: #ef4444;
+            font-weight: 800;
+        }
+
+        .card-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.68rem;
+            margin-bottom: 6px;
+        }
+
+        .card-category {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-rating {
+            color: #facc15;
+            font-weight: 700;
+        }
+
+        .product-title {
+            font-size: 0.86rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text-head);
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .product-snippet {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .price-current {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-head);
+        }
+
+        .price-mrp {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-discount {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #4ade80;
+        }
+
+        .btn-card-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .btn-view-item {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-head);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 9px;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-buy-instant {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-disabled {
+            background: #334155 !important;
+            color: #94a3b8 !important;
+            border: 1px solid #475569 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .btn-edit-card {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .btn-delete-card {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        /* Modal Styles */
+        .item-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 120;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .item-modal-box {
+            max-width: 480px;
+            margin: 20px auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close-ico {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-img-holder {
+            width: 100%;
+            height: 300px;
+            background: #1e293b;
+        }
+
+        .modal-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-thumbs-row {
+            display: flex;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-base);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .modal-thumbs-row::-webkit-scrollbar { display: none; }
+
+        .modal-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-thumb.active {
+            border-color: var(--primary);
+            opacity: 1;
+        }
+
+        .modal-details-body {
+            padding: 18px;
+        }
+
+        .modal-details-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-head);
+        }
+
+        .variant-selector-block {
+            margin: 12px 0;
+            display: none;
+        }
+
+        .variant-selector-block label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .variant-pills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .variant-pill-btn {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .variant-pill-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .modal-details-body p.desc {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 12px 0 16px;
+            white-space: pre-line;
+        }
+
+        /* Cart Drawer */
+        .cart-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+        }
+
+        .cart-modal-drawer {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cart-modal-backdrop.open { display: block; }
+        .cart-modal-drawer.open { transform: translateX(0); }
+
+        .cart-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cart-row-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            align-items: center;
+        }
+
+        .cart-row-item img {
+            width: 54px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info { flex-grow: 1; }
+        .cart-item-info h5 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-head);
+            margin-bottom: 2px;
+        }
+
+        .cart-badge-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(56, 189, 248, 0.12);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+
+        .cart-qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .qty-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cart-footer-pane {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--surface-elevated);
+        }
+
+        .checkout-address-box input {
+            width: 100%;
+            padding: 9px 12px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.82rem;
+            outline: none;
+            margin-bottom: 6px;
+        }
+
+        .cart-summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-head);
+            margin-bottom: 12px;
+        }
+
+        .btn-checkout-wa {
+            width: 100%;
+            background: var(--whatsapp);
+            color: #000;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+        }
+
+        .btn-checkout-upi {
+            width: 100%;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 11px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        /* Admin Manager */
+        #adminManagerCard {
+            display: none;
+            max-width: 520px;
+            margin: 20px auto;
+            padding: 22px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
+        }
+
+        .admin-form-group {
+            margin-bottom: 14px;
+        }
+
+        .admin-form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .admin-form-group input, 
+        .admin-form-group select, 
+        .admin-form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: #ffffff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .admin-sizes-checkbox-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: var(--bg-base);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+        }
+
+        .admin-sizes-checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-body);
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .soldout-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--danger);
+            cursor: pointer;
+        }
+
+        .gallery-upload-card {
+            background: var(--bg-base);
+            border: 2px dashed rgba(56, 189, 248, 0.4);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .gallery-upload-card input[type="file"] {
+            display: block;
+            width: 100%;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .gallery-preview-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .gallery-preview-row img {
+            width: 52px;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            flex-shrink: 0;
+        }
+
+        .image-url-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .image-url-inputs input {
+            padding: 8px 10px;
+            font-size: 0.8rem;
+        }
+
+        .btn-submit-product {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .btn-cancel-edit {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .empty-store-indicator {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border);
+        }
+
+        /* ===================================================
+           CERTIFICATE OF TRUST & AUTHENTICITY STYLING
+        =================================================== */
+        .tvs-cert-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+            margin-top: 20px;
+        }
+
+        .tvs-cert-card {
+            max-width: 760px;
+            width: 100%;
+            background: #080d1a;
+            border: 3px solid var(--primary);
+            border-radius: 18px;
+            padding: 14px;
+            box-shadow: 0 10px 45px rgba(56, 189, 248, 0.2), inset 0 0 30px rgba(56, 189, 248, 0.08);
+            position: relative;
+        }
+
+        .tvs-cert-inner-border {
+            border: 1.5px dashed rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            padding: 32px 20px;
+            text-align: center;
+        }
+
+        .tvs-reg-no {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--primary);
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .tvs-cert-title {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .tvs-cert-subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .tvs-present-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .tvs-brand-name {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 0;
+            background: linear-gradient(90deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .tvs-brand-link {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--primary);
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .tvs-cert-statement {
+            font-size: 12px;
+            line-height: 1.6;
+            max-width: 550px;
+            margin: 16px auto 26px auto;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+        }
+
+        .tvs-cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .tvs-cert-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tvs-cert-item .tvs-icon {
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tvs-cert-item p {
+            margin: 0;
+            font-size: 12px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+
+        .tvs-cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+        }
+
+        .tvs-badge-box, .tvs-status-box, .tvs-sign-box {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .tvs-gold-seal {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #f59e0b);
+            color: #000;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .tvs-badge-label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .tvs-status-pill {
+            display: inline-block;
+            font-size: 11px;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .tvs-status-box small {
+            display: block;
+            font-size: 10px;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        .tvs-sign-line {
+            font-family: 'Great Vibes', cursive, sans-serif;
+            font-size: 26px;
+            color: var(--primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+        }
+
+        .tvs-sign-label {
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 16px;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .admin-portal-link {
+            color: #475569;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.72rem;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .tvs-cert-title { font-size: 16px; }
+            .tvs-brand-name { font-size: 22px; }
+            .tvs-cert-footer { flex-direction: column; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top Navigation -->
-  <header class="navbar">
-    <a href="#" class="brand-logo">
-      <span class="brand-logo-badge">TV</span>
-      <span class="brand-logo-text">TrendVibe</span>
-    </a>
-    <div class="nav-actions">
-      <button class="btn-nav-icon" onclick="openAdminModal()">⚙️ Admin</button>
-      <button class="btn-nav-icon" onclick="toggleCartDrawer()">
-        🛒 Cart <span class="cart-counter" id="cart-counter-badge">0</span>
-      </button>
+    <div class="marquee-strip">
+        ⚡ FREE ALL-INDIA SHIPPING | PREPAID UPI & CASH ON DELIVERY (COD) ⚡
     </div>
-  </header>
 
-  <!-- Hero Header -->
-  <section class="hero-banner">
-    <h1 class="hero-title">TRENDVIBE STORE</h1>
-    <p class="hero-tagline">EVERYTHING YOU NEED IN ONE PLACE</p>
-    <a href="https://trendvibe-store.netlify.app" class="store-domain-pill">trendvibe-store.netlify.app</a>
-  </section>
+    <header>
+        <a href="#" class="brand-logo">
+            <img src="logo.png" alt="TrendVibe Logo">
+            <span>TrendVibe <span>Store</span></span>
+        </a>
+        <button class="cart-trigger-btn" onclick="toggleCartDrawer(true)">
+            <span>🛒 Cart</span>
+            <span class="cart-counter-badge" id="headerCartCount">0</span>
+        </button>
+    </header>
 
-  <!-- Search & Category Filters -->
-  <section class="search-filter-wrapper">
-    <input type="text" id="catalog-search" class="search-box" placeholder="Search dresses, perfumes, shoes, gadgets..." oninput="handleSearch(this.value)">
-    
-    <div class="category-scroll" id="category-filter-list">
-      <button class="cat-pill active" onclick="setCategoryFilter('ALL')">All Products</button>
-      <button class="cat-pill" onclick="setCategoryFilter('Fashion')">Streetwear & Fashion 👗</button>
-      <button class="cat-pill" onclick="setCategoryFilter('Perfumes')">Fragrance & Scents 🧴</button>
-      <button class="cat-pill" onclick="setCategoryFilter('Footwear')">Footwear & Sneakers 👟</button>
-      <button class="cat-pill" onclick="setCategoryFilter('Accessories')">Watches & Jewelry 💍</button>
+    <div class="search-container">
+        <div class="search-box-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="storeSearchInput" class="search-input" placeholder="Search viral drops, shoes, tech, jewelry..." oninput="handleLiveSearch()">
+        </div>
     </div>
-  </section>
 
-  <!-- Product Catalog Grid -->
-  <main class="catalog-container" id="product-grid"></main>
+    <div class="value-grid">
+        <div class="value-card">
+            <span class="value-ico">🚚</span>
+            <p>Free Delivery</p>
+        </div>
+        <div class="value-card">
+            <span class="value-ico">💳</span>
+            <p>UPI & COD Accepted</p>
+        </div>
+        <div class="value-card">
+            <span class="value-ico">🛡️</span>
+            <p>Quality Verified</p>
+        </div>
+    </div>
 
-  <!-- Certificate of Trust & Authenticity -->
-  <section class="tvs-cert-wrapper">
-    <div class="tvs-cert-card">
-      <div class="tvs-cert-inner-border">
+    <!-- EXPANDED CATEGORY FILTER BAR -->
+    <div class="category-filter-row">
+        <button class="filter-chip active" onclick="applyCategoryFilter('all', this)">All Drops 🔥</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('shoes', this)">Shoes & Footwear 👟</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('fashion', this)">Streetwear & Fashion 👗</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('beauty', this)">Beauty & Perfumes 🧴</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('gadgets', this)">Mini Gadgets ⚡</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('jewelry', this)">Aesthetic Jewelry 💍</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('bags', this)">Bags & Wallets 🎒</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('eyewear', this)">Eyewear & Shades 🕶️</button>
+        <button class="filter-chip" onclick="applyCategoryFilter('decor', this)">Room Decor & Living 🏠</button>
+    </div>
+
+    <!-- Admin Console -->
+    <div id="adminManagerCard">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h4 style="color:var(--primary);" id="adminFormHeading">Store Management Console</h4>
+            <button onclick="terminateAdminSession()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:700;">Logout</button>
+        </div>
         
-        <div class="tvs-reg-no">REG NO: TVS-VERIFIED-2026-IN</div>
-        <h2 class="tvs-cert-title">CERTIFICATE OF TRUST & AUTHENTICITY</h2>
-        <div class="tvs-cert-subtitle">OFFICIAL VERIFICATION OF EXCELLENCE</div>
+        <input type="hidden" id="editingProductDocId" value="">
 
-        <div class="tvs-cert-presentation">
-          <p class="tvs-present-text">THIS IS PROUDLY PRESENTED TO</p>
-          <h2 class="tvs-brand-name">TRENDVIBE STORE</h2>
-          <a href="https://trendvibe-store.netlify.app" target="_blank" class="tvs-brand-link">trendvibe-store.netlify.app</a>
+        <div class="admin-form-group">
+            <label>Product Title *</label>
+            <input type="text" id="admName" placeholder="e.g. Trendy Casual Sneakers / Bridal Chooda Set">
         </div>
 
-        <p class="tvs-cert-statement">
-          FOR OUTSTANDING COMMITMENT TO QUALITY ASSURANCE, CUSTOMER DATA PRIVACY, 
-          AND RELIABLE ONLINE COMMERCE STANDARDS.
-        </p>
-
-        <div class="tvs-cert-grid">
-          <div class="tvs-cert-item">
-            <span class="tvs-icon">✔</span>
-            <p><strong>100% Genuine</strong> & Quality Tested Lifestyle Products</p>
-          </div>
-          <div class="tvs-cert-item">
-            <span class="tvs-icon">✔</span>
-            <p><strong>Safe & Encrypted</strong> Payments via Instant UPI / FamPay</p>
-          </div>
-          <div class="tvs-cert-item">
-            <span class="tvs-icon">✔</span>
-            <p><strong>Nationwide Delivery</strong> with Cash on Delivery (COD) Facility</p>
-          </div>
-          <div class="tvs-cert-item">
-            <span class="tvs-icon">✔</span>
-            <p><strong>100% Customer Support</strong> & Dedicated Order Assistance</p>
-          </div>
-        </div>
-
-        <div class="tvs-cert-footer">
-          <div class="tvs-badge-box">
-            <div class="tvs-gold-seal">★ SECURE ★</div>
-            <span class="tvs-badge-label">100% SECURE STORE</span>
-          </div>
-
-          <div class="tvs-status-box">
-            <span class="tvs-status-pill">● VERIFIED MERCHANT</span>
-            <small>INDIA | OCTOBER 2026</small>
-          </div>
-
-          <div class="tvs-sign-box">
-            <div class="tvs-sign-line">TrendVibe Ops Team</div>
-            <span class="tvs-sign-label">AUTHORIZED SIGNATURE</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Cart Drawer -->
-  <div class="cart-drawer" id="cart-drawer">
-    <div class="cart-header">
-      <h3 style="font-size: 16px;">Shopping Cart 🛒</h3>
-      <button onclick="toggleCartDrawer()" style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✕</button>
-    </div>
-    <div class="cart-body" id="cart-items-container"></div>
-    <div class="cart-footer">
-      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-weight:700;">
-        <span>Total Payable:</span>
-        <span id="cart-grand-total">₹0</span>
-      </div>
-      <button class="btn-checkout-upi" onclick="executeUpiDirectPay()">
-        ⚡ Instant Prepaid UPI (<span id="cart-upi-label">UPI Pay</span>)
-      </button>
-      <button class="btn-checkout-cod" onclick="executeWhatsAppCheckout()">
-        💬 Order via WhatsApp (COD)
-      </button>
-    </div>
-  </div>
-
-  <!-- Admin Modal Console -->
-  <div class="modal-overlay" id="admin-modal">
-    <div class="modal-dialog">
-      <button class="modal-close-btn" onclick="closeAdminModal()">✕</button>
-      <h3 style="margin-bottom: 16px; color: var(--neon-cyan);">⚙️ TrendVibe Product Publisher</h3>
-      
-      <div class="admin-form-group">
-        <label>Product Title *</label>
-        <input type="text" id="adm-title" class="admin-input" placeholder="e.g. Fancy Fabulous Floral Printed Crepe Midi Dress">
-      </div>
-
-      <div class="admin-form-group">
-        <label>Department Category *</label>
-        <select id="adm-category" class="admin-select">
-          <option value="Fashion">Streetwear & Fashion 👗</option>
-          <option value="Perfumes">Fragrance & Scents 🧴</option>
-          <option value="Footwear">Footwear & Sneakers 👟</option>
-          <option value="Accessories">Watches & Jewelry 💍</option>
-        </select>
-      </div>
-
-      <div class="admin-form-group">
-        <label>Offer Price (₹) *</label>
-        <input type="number" id="adm-price" class="admin-input" placeholder="e.g. 349">
-      </div>
-
-      <div class="admin-form-group">
-        <label>Original MRP (₹) *</label>
-        <input type="number" id="adm-mrp" class="admin-input" placeholder="e.g. 799">
-      </div>
-
-      <div class="admin-form-group">
-        <label>Image URL * (Direct link or Imgur)</label>
-        <input type="text" id="adm-img" class="admin-input" placeholder="https://...">
-      </div>
-
-      <div class="admin-form-group">
-        <label>Promotional Badge</label>
-        <input type="text" id="adm-badge" class="admin-input" placeholder="Trending Fit ✨">
-      </div>
-
-      <div class="admin-form-group">
-        <label>Product Highlights (Bullet points separated by newline)</label>
-        <textarea id="adm-desc" class="admin-textarea" rows="3" placeholder="• Premium lightweight fabric&#10;• Fast delivery"></textarea>
-      </div>
-
-      <button onclick="saveProductFromAdmin()" class="btn-checkout-upi" style="margin-top: 14px;">
-        🚀 Publish To Live Catalog
-      </button>
-    </div>
-  </div>
-
-  <!-- Product Detail Modal -->
-  <div class="modal-overlay" id="quickview-modal">
-    <div class="modal-dialog">
-      <button class="modal-close-btn" onclick="closeQuickView()">✕</button>
-      <div id="quickview-content"></div>
-    </div>
-  </div>
-
-  <!-- Store Logic -->
-  <script>
-    // ==========================================
-    // CONFIGURATION
-    // ==========================================
-    const STORE_UPI_VPA = "aritraadhikari@fam"; 
-    const WHATSAPP_NUMBER = "919832075153";      
-    const ADMIN_PASSCODE = "TVS123"; // PASSWORD UPDATED TO TVS123
-
-    document.getElementById("cart-upi-label").innerText = STORE_UPI_VPA;
-
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "prod-1",
-        title: "Fancy Fabulous Floral Printed Sleeveless Crepe Midi Dress",
-        category: "Fashion",
-        price: 349,
-        mrp: 799,
-        badge: "Trending Fit ✨",
-        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=600&q=80",
-        description: "Premium lightweight Crepe fabric designed for all-day comfort with tiered flare silhouette."
-      },
-      {
-        id: "prod-2",
-        title: "Signature Noir Luxury Eau De Parfum (100ml)",
-        category: "Perfumes",
-        price: 499,
-        mrp: 1299,
-        badge: "Bestseller 🔥",
-        image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
-        description: "Long lasting 24-hour woody amber aroma with top notes of bergamot and cedarwood."
-      },
-      {
-        id: "prod-3",
-        title: "Urban Street Neon Casual Sneakers",
-        category: "Footwear",
-        price: 699,
-        mrp: 1599,
-        badge: "Hot Deal ⚡",
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
-        description: "Ergonomic shock-absorbing sole with breathable athletic knit finish."
-      }
-    ];
-
-    let products = JSON.parse(localStorage.getItem("trendvibe_catalog")) || DEFAULT_PRODUCTS;
-    let cart = JSON.parse(localStorage.getItem("trendvibe_cart")) || [];
-    let currentCategory = "ALL";
-    let searchQuery = "";
-
-    function renderCatalog() {
-      const grid = document.getElementById("product-grid");
-      grid.innerHTML = "";
-
-      const filtered = products.filter(p => {
-        const matchesCat = (currentCategory === "ALL" || p.category === currentCategory);
-        const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCat && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted);">No products found in this category.</div>`;
-        return;
-      }
-
-      filtered.forEach(p => {
-        const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
-          ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
-          <div class="card-img-wrap" onclick="openQuickView('${p.id}')">
-            <img src="${p.image}" class="card-img" alt="${p.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/0f172a/00f2fe?text=TrendVibe'">
-          </div>
-          <div class="card-details">
-            <span class="card-cat">${p.category}</span>
-            <div class="card-title">${p.title}</div>
-            <div class="card-pricing">
-              <span class="current-price">₹${p.price}</span>
-              <span class="mrp-price">₹${p.mrp}</span>
-              <span class="discount-tag">${discount}% OFF</span>
+        <div class="admin-form-group">
+            <label>📁 Option A: Choose Images from Phone Gallery</label>
+            <div class="gallery-upload-card">
+                <input type="file" id="galleryFileInput" accept="image/*" multiple onchange="processGalleryPhotos(event)">
+                <div id="galleryUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Tap above to select photos from phone (Leave empty if keeping existing images)</div>
+                <div class="gallery-preview-row" id="galleryPreviewRow"></div>
             </div>
-            <div class="card-actions">
-              <button class="btn-view-quick" onclick="openQuickView('${p.id}')">View Details</button>
-              <button class="btn-add-cart-fast" onclick="addToCart('${p.id}')">+ Add</button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function setCategoryFilter(cat) {
-      currentCategory = cat;
-      document.querySelectorAll(".cat-pill").forEach(el => el.classList.remove("active"));
-      event.target.classList.add("active");
-      renderCatalog();
-    }
-
-    function handleSearch(val) {
-      searchQuery = val;
-      renderCatalog();
-    }
-
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      if (!product) return;
-
-      const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ ...product, qty: 1 });
-      }
-
-      saveCartState();
-      updateCartDrawerUI();
-      toggleCartDrawer(true);
-    }
-
-    function changeCartQty(id, delta) {
-      const item = cart.find(i => i.id === id);
-      if (!item) return;
-
-      item.qty += delta;
-      if (item.qty <= 0) {
-        cart = cart.filter(i => i.id !== id);
-      }
-      saveCartState();
-      updateCartDrawerUI();
-    }
-
-    function saveCartState() {
-      localStorage.setItem("trendvibe_cart", JSON.stringify(cart));
-      document.getElementById("cart-counter-badge").innerText = cart.reduce((acc, i) => acc + i.qty, 0);
-    }
-
-    function toggleCartDrawer(forceOpen = false) {
-      const drawer = document.getElementById("cart-drawer");
-      if (forceOpen) {
-        drawer.classList.add("open");
-      } else {
-        drawer.classList.toggle("open");
-      }
-      updateCartDrawerUI();
-    }
-
-    function updateCartDrawerUI() {
-      const container = document.getElementById("cart-items-container");
-      const totalEl = document.getElementById("cart-grand-total");
-      container.innerHTML = "";
-
-      let grandTotal = 0;
-
-      if (cart.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding-top:40px;">Your cart is empty.</p>`;
-        totalEl.innerText = "₹0";
-        return;
-      }
-
-      cart.forEach(item => {
-        grandTotal += (item.price * item.qty);
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <img src="${item.image}" class="cart-item-img" alt="${item.title}">
-          <div style="flex:1;">
-            <div style="font-size:12px; font-weight:700; margin-bottom:4px;">${item.title}</div>
-            <div style="color:var(--neon-cyan); font-weight:800; font-size:13px;">₹${item.price}</div>
-            <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-              <button onclick="changeCartQty('${item.id}', -1)" style="background:rgba(255,255,255,0.1); border:none; color:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">-</button>
-              <span style="font-size:12px; font-weight:700;">${item.qty}</span>
-              <button onclick="changeCartQty('${item.id}', 1)" style="background:rgba(255,255,255,0.1); border:none; color:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">+</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-
-      totalEl.innerText = `₹${grandTotal}`;
-    }
-
-    function executeUpiDirectPay() {
-      if (cart.length === 0) {
-        alert("Please add items to cart before checkout!");
-        return;
-      }
-
-      const grandTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      const note = encodeURIComponent("TrendVibe Store Order Payment");
-      const payeeName = encodeURIComponent("TrendVibe Store");
-      const upiUrl = `upi://pay?pa=${STORE_UPI_VPA}&pn=${payeeName}&am=${grandTotal}&cu=INR&tn=${note}`;
-      
-      window.location.href = upiUrl;
-    }
-
-    function executeWhatsAppCheckout() {
-      if (cart.length === 0) {
-        alert("Please add items to cart before checkout!");
-        return;
-      }
-
-      const grandTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      let orderList = cart.map(i => `• ${i.title} (x${i.qty}) - ₹${i.price * i.qty}`).join("\n");
-      
-      let message = `🛒 *NEW ORDER - TRENDVIBE STORE*\n\n${orderList}\n\n*Total Amount:* ₹${grandTotal}\n*Payment Option:* Cash on Delivery / UPI Confirmation\n\nPlease share your Full Name, Complete Address, and Pincode for fast dispatch!`;
-
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-      window.open(waUrl, "_blank");
-    }
-
-    function openQuickView(id) {
-      const p = products.find(item => item.id === id);
-      if (!p) return;
-
-      const content = document.getElementById("quickview-content");
-      content.innerHTML = `
-        <div style="text-align:center; margin-bottom:14px;">
-          <img src="${p.image}" style="max-height:260px; width:100%; object-fit:contain; border-radius:10px; background:#060911;">
         </div>
-        <span class="card-cat">${p.category}</span>
-        <h2 style="font-size:18px; margin: 6px 0;">${p.title}</h2>
-        <div style="font-size:22px; font-weight:800; color:var(--neon-cyan); margin-bottom:12px;">₹${p.price} <span style="text-decoration:line-through; font-size:14px; color:var(--text-muted);">₹${p.mrp}</span></div>
-        <p style="font-size:13px; color:#cbd5e1; line-height:1.6; margin-bottom:16px;">${p.description || 'Verified authentic quality merchandise.'}</p>
-        <button class="btn-checkout-upi" onclick="addToCart('${p.id}'); closeQuickView();">Add to Cart & Checkout</button>
-      `;
 
-      document.getElementById("quickview-modal").classList.add("active");
-    }
+        <div class="admin-form-group">
+            <label>🔗 Option B: Or Paste Image URLs (Meesho / Web)</label>
+            <div class="image-url-inputs">
+                <input type="url" id="img1" placeholder="Image 1 URL (Main Cover Image)">
+                <input type="url" id="img2" placeholder="Image 2 URL (Angle / Detail)">
+                <input type="url" id="img3" placeholder="Image 3 URL">
+                <input type="url" id="img4" placeholder="Image 4 URL">
+                <input type="url" id="img5" placeholder="Image 5 URL">
+            </div>
+        </div>
 
-    function closeQuickView() {
-      document.getElementById("quickview-modal").classList.remove("active");
-    }
+        <div class="admin-form-group">
+            <label>Department Category *</label>
+            <select id="admCategory">
+                <option value="shoes">Shoes & Footwear 👟</option>
+                <option value="fashion">Streetwear & Fashion 👗</option>
+                <option value="beauty">Beauty & Perfumes 🧴</option>
+                <option value="gadgets">Mini Gadgets ⚡</option>
+                <option value="jewelry">Aesthetic Jewelry 💍</option>
+                <option value="bags">Bags & Wallets 🎒</option>
+                <option value="eyewear">Eyewear & Shades 🕶️</option>
+                <option value="decor">Room Decor & Living 🏠</option>
+            </select>
+        </div>
 
-    function openAdminModal() {
-      const pass = prompt("Enter Store Admin Passcode:");
-      if (pass === ADMIN_PASSCODE) {
-        document.getElementById("admin-modal").classList.add("active");
-      } else if (pass !== null) {
-        alert("Incorrect passcode!");
-      }
-    }
+        <div class="admin-form-group">
+            <label>🎨 Available Colors (Comma separated, e.g. White, Black, Navy, Brown):</label>
+            <input type="text" id="admColors" placeholder="White, Black, Navy, Brown">
+        </div>
 
-    function closeAdminModal() {
-      document.getElementById("admin-modal").classList.remove("active");
-    }
+        <div class="admin-form-group">
+            <label>📏 Standard Clothing Sizes (Tick if applicable):</label>
+            <div class="admin-sizes-checkbox-row">
+                <label><input type="checkbox" name="admSizes" value="S"> S</label>
+                <label><input type="checkbox" name="admSizes" value="M"> M</label>
+                <label><input type="checkbox" name="admSizes" value="L"> L</label>
+                <label><input type="checkbox" name="admSizes" value="XL"> XL</label>
+                <label><input type="checkbox" name="admSizes" value="XXL"> XXL</label>
+            </div>
+            <label style="margin-top:6px;">Or Custom Sizes (For Shoes UK 6, 7, 8 / Bangles / Perfume ML):</label>
+            <input type="text" id="admCustomSizes" placeholder="UK 6, UK 7, UK 8, UK 9 or 2.4, 2.6, 2.8 or 50ml, 100ml">
+        </div>
 
-    function saveProductFromAdmin() {
-      const title = document.getElementById("adm-title").value.trim();
-      const category = document.getElementById("adm-category").value;
-      const price = parseFloat(document.getElementById("adm-price").value);
-      const mrp = parseFloat(document.getElementById("adm-mrp").value);
-      const image = document.getElementById("adm-img").value.trim();
-      const badge = document.getElementById("adm-badge").value.trim();
-      const desc = document.getElementById("adm-desc").value.trim();
+        <div class="admin-form-group">
+            <label class="soldout-checkbox-label">
+                <input type="checkbox" id="admIsSoldOut" style="width:18px; height:18px; cursor:pointer;">
+                <span>Mark as SOLD OUT (Disable buying & show out of stock)</span>
+            </label>
+        </div>
 
-      if (!title || isNaN(price) || isNaN(mrp) || !image) {
-        alert("Please fill all required fields correctly!");
-        return;
-      }
+        <div class="admin-form-group">
+            <label>Product Description & Highlights *</label>
+            <textarea id="admDesc" rows="3" placeholder="Highlights, material, sole quality, care instructions..."></textarea>
+        </div>
 
-      const newProd = {
-        id: "prod-" + Date.now(),
-        title: title,
-        category: category,
-        price: price,
-        mrp: mrp,
-        image: image,
-        badge: badge || "New Arrival ✨",
-        description: desc
-      };
+        <div class="admin-form-group">
+            <label>Promotional Badge</label>
+            <input type="text" id="admBadge" placeholder="e.g. Bestseller 🔥 / Sneaker Drop 👟">
+        </div>
 
-      products.unshift(newProd);
-      localStorage.setItem("trendvibe_catalog", JSON.stringify(products));
-      renderCatalog();
-      closeAdminModal();
-      alert("Product published successfully to live store!");
-    }
+        <div style="display:flex; gap:10px;">
+            <div class="admin-form-group" style="flex:1;">
+                <label>Offer Price (₹) *</label>
+                <input type="number" id="admPrice" placeholder="399">
+            </div>
+            <div class="admin-form-group" style="flex:1;">
+                <label>Original MRP (₹) *</label>
+                <input type="number" id="admOrigPrice" placeholder="999">
+            </div>
+        </div>
 
-    // Init
-    saveCartState();
-    renderCatalog();
-  </script>
+        <button class="btn-submit-product" id="publishBtn" onclick="publishProductToStore()">Publish To Live Catalog 🚀</button>
+        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="resetAdminForm()">Cancel Editing</button>
+    </div>
+
+    <!-- Product Showcase Grid -->
+    <main class="catalog-container" id="productShowcaseGrid"></main>
+
+    <!-- Certificate of Trust & Authenticity -->
+    <section class="tvs-cert-wrapper">
+        <div class="tvs-cert-card">
+            <div class="tvs-cert-inner-border">
+                
+                <div class="tvs-reg-no">REG NO: TVS-VERIFIED-2026-IN</div>
+                <h2 class="tvs-cert-title">CERTIFICATE OF TRUST & AUTHENTICITY</h2>
+                <div class="tvs-cert-subtitle">OFFICIAL VERIFICATION OF EXCELLENCE</div>
+
+                <div class="tvs-cert-presentation">
+                    <p class="tvs-present-text">THIS IS PROUDLY PRESENTED TO</p>
+                    <h2 class="tvs-brand-name">TRENDVIBE STORE</h2>
+                    <a href="https://trendvibe-store.netlify.app" target="_blank" class="tvs-brand-link">trendvibe-store.netlify.app</a>
+                </div>
+
+                <p class="tvs-cert-statement">
+                    FOR OUTSTANDING COMMITMENT TO QUALITY ASSURANCE, CUSTOMER DATA PRIVACY, 
+                    AND RELIABLE ONLINE COMMERCE STANDARDS.
+                </p>
+
+                <div class="tvs-cert-grid">
+                    <div class="tvs-cert-item">
+                        <span class="tvs-icon">✔</span>
+                        <p><strong>100% Genuine</strong> & Quality Tested Lifestyle Products</p>
+                    </div>
+                    <div class="tvs-cert-item">
+                        <span class="tvs-icon">✔</span>
+                        <p><strong>Safe & Encrypted</strong> Payments via Instant UPI / FamPay</p>
+                    </div>
+                    <div class="tvs-cert-item">
+                        <span class="tvs-icon">✔</span>
+                        <p><strong>Nationwide Delivery</strong> with Cash on Delivery (COD) Facility</p>
+                    </div>
+                    <div class="tvs-cert-item">
+                        <span class="tvs-icon">✔</span>
+                        <p><strong>100% Customer Support</strong> & Dedicated Order Assistance</p>
+                    </div>
+                </div>
+
+                <div class="tvs-cert-footer">
+                    <div class="tvs-badge-box">
+                        <div class="tvs-gold-seal">★ SECURE ★</div>
+                        <span class="tvs-badge-label">100% SECURE STORE</span>
+                    </div>
+
+                    <div class="tvs-status-box">
+                        <span class="tvs-status-pill">● VERIFIED MERCHANT</span>
+                        <small>INDIA | OCTOBER 2026</small>
+                    </div>
+
+                    <div class="tvs-sign-box">
+                        <div class="tvs-sign-line">TrendVibe Ops Team</div>
+                        <span class="tvs-sign-label">AUTHORIZED SIGNATURE</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Quick View Modal -->
+    <div class="item-modal-backdrop" id="productViewModal" onclick="closeProductModal(event)">
+        <div class="item-modal-box">
+            <button class="modal-close-ico" onclick="closeProductModal(null, true)">&times;</button>
+            <div class="modal-img-holder">
+                <img id="modalMainImg" src="" alt="Main Preview">
+            </div>
+            <div class="modal-thumbs-row" id="modalThumbnails"></div>
+
+            <div class="modal-details-body">
+                <span id="modalCategory" style="font-size:0.7rem; font-weight:700; color:var(--primary); text-transform:uppercase;"></span>
+                <h3 id="modalTitle"></h3>
+                <div class="price-wrap">
+                    <span class="price-current" id="modalPrice"></span>
+                    <span class="price-mrp" id="modalMrp"></span>
+                    <span class="price-discount" id="modalDiscount"></span>
+                </div>
+
+                <div class="variant-selector-block" id="modalColorBlock">
+                    <label>Select Color (Required):</label>
+                    <div class="variant-pills-row" id="modalColorPills"></div>
+                </div>
+
+                <div class="variant-selector-block" id="modalSizeBlock">
+                    <label>Select Size (Required):</label>
+                    <div class="variant-pills-row" id="modalSizePills"></div>
+                </div>
+
+                <div style="font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:4px;">Product Highlights:</div>
+                <p class="desc" id="modalDesc"></p>
+                <div class="btn-card-group" id="modalActions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-modal-backdrop" id="cartBackdrop" onclick="toggleCartDrawer(false)"></div>
+    <div class="cart-modal-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button class="cart-close-btn" onclick="toggleCartDrawer(false)">&times;</button>
+        </div>
+        <div class="cart-items-scroll" id="cartItemsList"></div>
+        <div class="cart-footer-pane">
+            <div class="checkout-address-box">
+                <input type="text" id="custName" placeholder="Full Name">
+                <input type="tel" id="custPhone" placeholder="10-Digit Mobile Number">
+                <input type="text" id="custAddress" placeholder="Delivery Address with Pincode">
+            </div>
+            <div class="cart-summary-line">
+                <span>Total Amount:</span>
+                <span id="cartSubtotalAmount">₹0</span>
+            </div>
+            <button class="btn-checkout-wa" onclick="executeWhatsAppCheckout()">
+                💬 Order via WhatsApp (COD / Details)
+            </button>
+            <button class="btn-checkout-upi" onclick="executeUpiDirectPay()">
+                ⚡ Instant Prepaid UPI (9832075153@fam)
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 <b>TrendVibe Store</b>. All rights reserved.</p>
+        <p style="margin-top: 6px;">Authentic Reseller Network • Verified Quality • Pan-India Delivery</p>
+        <span class="admin-portal-link" onclick="initiateAdminLogin()">Admin Portal 🔒</span>
+    </footer>
+
+    <!-- FIREBASE INITIALIZATION SCRIPT (Your Live Database) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            setDoc, 
+            deleteDoc, 
+            doc, 
+            onSnapshot, 
+            serverTimestamp, 
+            query, 
+            orderBy 
+        } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0HtHh-jYWePRqyiGWvSPBGHOwDy2EOrA",
+            authDomain: "trendvibe-store.firebaseapp.com",
+            projectId: "trendvibe-store",
+            storageBucket: "trendvibe-store.firebasestorage.app",
+            messagingSenderId: "319103175096",
+            appId: "1:319103175096:web:18e9368e4c651d08f3674d",
+            measurementId: "G-M1P2HYLSGY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const productsCol = collection(db, "products");
+
+        window.db = db;
+        window.productsCol = productsCol;
+        window.addDoc = addDoc;
+        window.setDoc = setDoc;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+        window.serverTimestamp = serverTimestamp;
+
+        const q = query(productsCol, orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            window.products = [];
+            snapshot.forEach((d) => {
+                const item = d.data();
+                item.docId = d.id;
+                window.products.push(item);
+            });
+            window.renderCatalog();
+        }, (err) => {
+            console.error("Firestore Error:", err);
+        });
+    </script>
+
+    <!-- STORE INTERACTION SCRIPT -->
+    <script>
+        const STORE_PHONE = "919832075153";
+        const STORE_UPI_VPA = "9832075153@fam"; // Apnar original UPI
+        const ADMIN_SECRET = "TVS123";          // Apnar notun password TVS123
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let galleryCompressedImages = [];
+        let isProcessingPhotos = false;
+        let selectedProductModalSize = null;
+        let selectedProductModalColor = null;
+        let currentModalProductIndex = null;
+        let existingImagesWhileEditing = [];
+
+        let cart = JSON.parse(localStorage.getItem('tv_cart')) || [];
+        window.products = [];
+        let isAdminLoggedIn = sessionStorage.getItem('tv_admin_session') === 'active';
+
+        const showcaseGrid = document.getElementById('productShowcaseGrid');
+        const adminManagerCard = document.getElementById('adminManagerCard');
+        const headerCartCount = document.getElementById('headerCartCount');
+
+        function refreshAdminVisibility() {
+            adminManagerCard.style.display = isAdminLoggedIn ? 'block' : 'none';
+        }
+
+        function initiateAdminLogin() {
+            if (isAdminLoggedIn) {
+                alert("Already authenticated as Admin.");
+                return;
+            }
+            const entered = prompt("Enter Administrator Security Code:");
+            if (entered === ADMIN_SECRET) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('tv_admin_session', 'active');
+                refreshAdminVisibility();
+                renderCatalog();
+                alert("Admin login successful!");
+            } else if (entered !== null) {
+                alert("Incorrect code.");
+            }
+        }
+
+        function terminateAdminSession() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('tv_admin_session');
+            refreshAdminVisibility();
+            resetAdminForm();
+            renderCatalog();
+            alert("Admin signed out.");
+        }
+
+        function compressSingleImageFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 380;
+                        const scale = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scale;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const compressedUri = canvas.toDataURL('image/jpeg', 0.52);
+                        resolve(compressedUri);
+                    };
+                    img.onerror = () => reject(new Error("Image decode failed"));
+                    img.src = evt.target.result;
+                };
+                reader.onerror = () => reject(new Error("File read failed"));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function processGalleryPhotos(e) {
+            const files = Array.from(e.target.files);
+            const statusLabel = document.getElementById('galleryUploadStatus');
+            const previewBox = document.getElementById('galleryPreviewRow');
+            const publishBtn = document.getElementById('publishBtn');
+            
+            previewBox.innerHTML = '';
+            galleryCompressedImages = [];
+
+            if (files.length === 0) return;
+
+            isProcessingPhotos = true;
+            publishBtn.disabled = true;
+            publishBtn.innerText = "⏳ Processing Photos...";
+            statusLabel.style.color = '#38bdf8';
+            statusLabel.innerText = `Optimizing ${files.length} photo(s)...`;
+
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    const compressed = await compressSingleImageFile(files[i]);
+                    galleryCompressedImages.push(compressed);
+
+                    const thumb = document.createElement('img');
+                    thumb.src = compressed;
+                    previewBox.appendChild(thumb);
+                }
+
+                statusLabel.style.color = '#4ade80';
+                statusLabel.innerText = `✓ ${galleryCompressedImages.length} new photo(s) selected!`;
+            } catch (err) {
+                statusLabel.style.color = '#ef4444';
+                statusLabel.innerText = '❌ Failed to process images.';
+            } finally {
+                isProcessingPhotos = false;
+                publishBtn.disabled = false;
+                const docId = document.getElementById('editingProductDocId').value;
+                publishBtn.innerText = docId ? "Update Product 🔄" : "Publish To Live Catalog 🚀";
+            }
+        }
+
+        window.renderCatalog = function() {
+            showcaseGrid.innerHTML = '';
+
+            let filtered = window.products.filter(p => {
+                const matchCategory = currentCategory === 'all' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    (p.badge && p.badge.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                showcaseGrid.innerHTML = `
+                    <div class="empty-store-indicator">
+                        <h4 style="color:#ffffff; font-size:1.1rem; margin-bottom:6px;">No Products Found</h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">Login to Admin Portal below to upload items in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach((p, idx) => {
+                const discount = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
+                const primaryImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || '');
+                const isSoldOut = !!p.isSoldOut;
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-thumbnail-box" onclick="viewProductModal(${idx})">
+                        <img src="${primaryImg}" alt="${p.name}">
+                        ${isSoldOut ? `<span class="card-badge sold-out">SOLD OUT 🚫</span>` : (p.badge ? `<span class="card-badge">${p.badge}</span>` : '')}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category">${p.category}</span>
+                            <span class="card-rating">★ 4.9 (${p.images ? p.images.length : 1} Photos)</span>
+                        </div>
+                        <h4 class="product-title" onclick="viewProductModal(${idx})">${p.name}</h4>
+                        <div class="product-snippet">${p.desc || 'Premium quality guaranteed.'}</div>
+                        <div class="price-wrap">
+                            <span class="price-current">₹${p.price}</span>
+                            <span class="price-mrp">₹${p.origPrice}</span>
+                            <span class="price-discount">${discount}% OFF</span>
+                        </div>
+                        <div class="btn-card-group">
+                            <button class="btn-view-item" onclick="viewProductModal(${idx})">View Details 🔍</button>
+                            
+                            ${isSoldOut ? `
+                                <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                                <button class="btn-buy-instant btn-disabled" disabled>Sold Out</button>
+                            ` : `
+                                <button class="btn-add-cart" onclick="quickAddToCart(${idx})">+ Add to Cart</button>
+                                <button class="btn-buy-instant" onclick="viewProductModal(${idx})">Buy Now</button>
+                            `}
+
+                            ${isAdminLoggedIn ? `
+                                <button class="btn-edit-card" onclick="startEditingProduct(${idx})">✏️ Edit Listing & Price</button>
+                                <button class="btn-delete-card" onclick="removeProductByIndex('${p.docId}')">🗑 Delete Listing</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                showcaseGrid.appendChild(card);
+            });
+        };
+
+        function startEditingProduct(index) {
+            const p = window.products[index];
+            document.getElementById('editingProductDocId').value = p.docId;
+            document.getElementById('adminFormHeading').innerText = `Editing: ${p.name.substring(0, 22)}...`;
+            document.getElementById('admName').value = p.name;
+            document.getElementById('admCategory').value = p.category || 'shoes';
+            document.getElementById('admDesc').value = p.desc || '';
+            document.getElementById('admBadge').value = p.badge || '';
+            document.getElementById('admPrice').value = p.price;
+            document.getElementById('admOrigPrice').value = p.origPrice;
+            document.getElementById('admIsSoldOut').checked = !!p.isSoldOut;
+            document.getElementById('admColors').value = (p.colors || []).join(', ');
+
+            const standardSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+            let customSizes = [];
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => {
+                cb.checked = p.sizes ? p.sizes.includes(cb.value) : false;
+            });
+            if (p.sizes) {
+                customSizes = p.sizes.filter(s => !standardSizes.includes(s));
+            }
+            document.getElementById('admCustomSizes').value = customSizes.join(', ');
+
+            existingImagesWhileEditing = p.images || [p.img];
+            galleryCompressedImages = [];
+            const previewBox = document.getElementById('galleryPreviewRow');
+            previewBox.innerHTML = '';
+            existingImagesWhileEditing.forEach(imgSrc => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                previewBox.appendChild(thumb);
+            });
+            document.getElementById('galleryUploadStatus').innerText = 'Showing existing images. Upload new files if you wish to change.';
+
+            document.getElementById('publishBtn').innerText = "Update Product 🔄";
+            document.getElementById('cancelEditBtn').style.display = 'block';
+
+            adminManagerCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetAdminForm() {
+            document.getElementById('editingProductDocId').value = "";
+            document.getElementById('adminFormHeading').innerText = "Store Management Console";
+            document.getElementById('admName').value = '';
+            document.getElementById('admDesc').value = '';
+            document.getElementById('admBadge').value = '';
+            document.getElementById('admPrice').value = '';
+            document.getElementById('admOrigPrice').value = '';
+            document.getElementById('admColors').value = '';
+            document.getElementById('admCustomSizes').value = '';
+            document.getElementById('admIsSoldOut').checked = false;
+            document.getElementById('galleryFileInput').value = '';
+            document.getElementById('galleryPreviewRow').innerHTML = '';
+            document.getElementById('galleryUploadStatus').innerText = 'Tap above to select multiple photos from your mobile device';
+            document.getElementById('img1').value = '';
+            document.getElementById('img2').value = '';
+            document.getElementById('img3').value = '';
+            document.getElementById('img4').value = '';
+            document.getElementById('img5').value = '';
+            document.querySelectorAll('input[name="admSizes"]').forEach(cb => cb.checked = false);
+            galleryCompressedImages = [];
+            existingImagesWhileEditing = [];
+
+            document.getElementById('publishBtn').innerText = "Publish To Live Catalog 🚀";
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+
+        async function publishProductToStore() {
+            if (isProcessingPhotos) {
+                alert("Photos are still compressing. Please wait 2 seconds!");
+                return;
+            }
+
+            const docId = document.getElementById('editingProductDocId').value;
+            const name = document.getElementById('admName').value.trim();
+            const desc = document.getElementById('admDesc').value.trim();
+            const category = document.getElementById('admCategory').value;
+            const badge = document.getElementById('admBadge').value.trim();
+            const price = parseFloat(document.getElementById('admPrice').value);
+            const origPrice = parseFloat(document.getElementById('admOrigPrice').value);
+            const isSoldOut = document.getElementById('admIsSoldOut').checked;
+
+            const standardSizes = Array.from(document.querySelectorAll('input[name="admSizes"]:checked')).map(cb => cb.value);
+            const customSizesRaw = document.getElementById('admCustomSizes').value.trim();
+            const customSizes = customSizesRaw ? customSizesRaw.split(',').map(s => s.trim()).filter(s => s.length > 0) : [];
+            const allSizes = [...standardSizes, ...customSizes];
+
+            const colorsRaw = document.getElementById('admColors').value.trim();
+            const colors = colorsRaw ? colorsRaw.split(',').map(c => c.trim()).filter(c => c.length > 0) : [];
+
+            const webLinks = [
+                document.getElementById('img1').value.trim(),
+                document.getElementById('img2').value.trim(),
+                document.getElementById('img3').value.trim(),
+                document.getElementById('img4').value.trim(),
+                document.getElementById('img5').value.trim()
+            ].filter(u => u.length > 0);
+
+            let finalImages = [];
+            if (galleryCompressedImages.length > 0 || webLinks.length > 0) {
+                finalImages = [...galleryCompressedImages, ...webLinks];
+            } else if (docId && existingImagesWhileEditing.length > 0) {
+                finalImages = existingImagesWhileEditing;
+            }
+
+            if (!name) {
+                alert("Please enter Product Title!");
+                return;
+            }
+            if (finalImages.length === 0) {
+                alert("Please select at least 1 image!");
+                return;
+            }
+            if (!desc) {
+                alert("Please add Product Description!");
+                return;
+            }
+            if (isNaN(price) || isNaN(origPrice)) {
+                alert("Please enter valid Offer Price and MRP!");
+                return;
+            }
+
+            const publishBtn = document.getElementById('publishBtn');
+            publishBtn.disabled = true;
+            publishBtn.innerText = "⏳ Saving to Cloud Firestore...";
+
+            try {
+                const productObj = {
+                    name,
+                    images: finalImages,
+                    desc: desc,
+                    category,
+                    sizes: allSizes,
+                    colors: colors,
+                    isSoldOut: isSoldOut,
+                    badge: badge || "Hot Drop 🔥",
+                    price,
+                    origPrice,
+                    createdAt: window.serverTimestamp ? window.serverTimestamp() : new Date()
+                };
+
+                if (docId) {
+                    await window.setDoc(window.doc(window.db, "products", docId), productObj);
+                    alert("Product details updated successfully in Cloud! 🔄");
+                } else {
+                    await window.addDoc(window.productsCol, productObj);
+                    alert("Product successfully published live to TrendVibe Cloud! 🚀");
+                }
+
+                resetAdminForm();
+            } catch (err) {
+                console.error(err);
+                alert("Cloud save failed: " + err.message);
+            } finally {
+                publishBtn.disabled = false;
+                publishBtn.innerText = "Publish To Live Catalog 🚀";
+            }
+        }
+
+        async function removeProductByIndex(docId) {
+            if (confirm("Permanently delete this product from Cloud?")) {
+                try {
+                    await window.deleteDoc(window.doc(window.db, "products", docId));
+                    alert("Product deleted from Cloud! 🗑");
+                } catch(err) {
+                    alert("Delete failed: " + err.message);
+                }
+            }
+        }
+
+        function viewProductModal(index) {
+            currentModalProductIndex = index;
+            selectedProductModalSize = null;
+            selectedProductModalColor = null;
+            const item = window.products[index];
+            const discount = Math.round(((item.origPrice - item.price) / item.origPrice) * 100);
+            const imgList = (item.images && item.images.length > 0) ? item.images : [item.img || ''];
+            const isSoldOut = !!item.isSoldOut;
+
+            document.getElementById('modalMainImg').src = imgList[0];
+            document.getElementById('modalCategory').innerText = item.category;
+            document.getElementById('modalTitle').innerText = item.name;
+            document.getElementById('modalPrice').innerText = `₹${item.price}`;
+            document.getElementById('modalMrp').innerText = `₹${item.origPrice}`;
+            document.getElementById('modalDiscount').innerText = `${discount}% OFF`;
+            document.getElementById('modalDesc').innerText = item.desc || "Verified quality product with free express home delivery across India.";
+
+            const thumbsContainer = document.getElementById('modalThumbnails');
+            thumbsContainer.innerHTML = '';
+            imgList.forEach((src, i) => {
+                const thumb = document.createElement('img');
+                thumb.src = src;
+                thumb.className = `modal-thumb ${i === 0 ? 'active' : ''}`;
+                thumb.onclick = function() {
+                    document.getElementById('modalMainImg').src = src;
+                    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                };
+                thumbsContainer.appendChild(thumb);
+            });
+
+            const colorBlock = document.getElementById('modalColorBlock');
+            const colorPillsContainer = document.getElementById('modalColorPills');
+            colorPillsContainer.innerHTML = '';
+
+            if (item.colors && item.colors.length > 0) {
+                colorBlock.style.display = 'block';
+                selectedProductModalColor = item.colors[0];
+
+                item.colors.forEach((col, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `variant-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.innerText = col;
+                    btn.onclick = function() {
+                        selectedProductModalColor = col;
+                        document.querySelectorAll('#modalColorPills .variant-pill-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    };
+                    colorPillsContainer.appendChild(btn);
+                });
+            } else {
+                colorBlock.style.display = 'none';
+                selectedProductModalColor = null;
+            }
+
+            const sizeBlock = document.getElementById('modalSizeBlock');
+            const sizePillsContainer = document.getElementById('modalSizePills');
+            sizePillsContainer.innerHTML = '';
+
+            if (item.sizes && item.sizes.length > 0) {
+                sizeBlock.style.display = 'block';
+                selectedProductModalSize = item.sizes[0];
+
+                item.sizes.forEach((sz, idx) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `variant-pill-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.innerText = sz;
+                    btn.onclick = function() {
+                        selectedProductModalSize = sz;
+                        document.querySelectorAll('#modalSizePills .variant-pill-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    };
+                    sizePillsContainer.appendChild(btn);
+                });
+            } else {
+                sizeBlock.style.display = 'none';
+                selectedProductModalSize = null;
+            }
+
+            const actionsBox = document.getElementById('modalActions');
+            if (isSoldOut) {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart btn-disabled" disabled>Out of Stock 🚫</button>
+                    <button class="btn-buy-instant btn-disabled" disabled>This Item is Sold Out</button>
+                `;
+            } else {
+                actionsBox.innerHTML = `
+                    <button class="btn-add-cart" onclick="confirmAddToCartFromModal(); closeProductModal(null, true);">+ Add to Cart</button>
+                    <button class="btn-buy-instant" onclick="confirmBuyNowFromModal(); closeProductModal(null, true);">Buy Now (COD / UPI)</button>
+                `;
+            }
+
+            document.getElementById('productViewModal').style.display = 'block';
+        }
+
+        function closeProductModal(e, force = false) {
+            if (force || (e && e.target.id === 'productViewModal')) {
+                document.getElementById('productViewModal').style.display = 'none';
+            }
+        }
+
+        function quickAddToCart(index) {
+            const item = window.products[index];
+            if (item.isSoldOut) return;
+
+            if ((item.sizes && item.sizes.length > 0) || (item.colors && item.colors.length > 0)) {
+                viewProductModal(index);
+            } else {
+                addItemToCartInternal(item, null, null);
+                toggleCartDrawer(true);
+            }
+        }
+
+        function confirmAddToCartFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = window.products[currentModalProductIndex];
+            if (item.isSoldOut) return;
+            addItemToCartInternal(item, selectedProductModalSize, selectedProductModalColor);
+            toggleCartDrawer(true);
+        }
+
+        function confirmBuyNowFromModal() {
+            if (currentModalProductIndex === null) return;
+            const item = window.products[currentModalProductIndex];
+            if (item.isSoldOut) return;
+            addItemToCartInternal(item, selectedProductModalSize, selectedProductModalColor);
+            toggleCartDrawer(true);
+        }
+
+        function addItemToCartInternal(item, chosenSize, chosenColor) {
+            const primaryImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
+            const existing = cart.find(c => c.name === item.name && c.selectedSize === chosenSize && c.selectedColor === chosenColor);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    name: item.name,
+                    price: item.price,
+                    img: primaryImg,
+                    selectedSize: chosenSize,
+                    selectedColor: chosenColor,
+                    qty: 1
+                });
+            }
+            syncCartState();
+        }
+
+        function applyCategoryFilter(cat, elem) {
+            document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+            elem.classList.add('active');
+            currentCategory = cat;
+            renderCatalog();
+        }
+
+        function handleLiveSearch() {
+            searchQuery = document.getElementById('storeSearchInput').value.trim();
+            renderCatalog();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            syncCartState();
+        }
+
+        function syncCartState() {
+            localStorage.setItem('tv_cart', JSON.stringify(cart));
+            const totalCount = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            headerCartCount.innerText = totalCount;
+            renderCartDrawer();
+        }
+
+        function renderCartDrawer() {
+            const listContainer = document.getElementById('cartItemsList');
+            const subtotalBox = document.getElementById('cartSubtotalAmount');
+            listContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center;color:var(--text-muted);margin:auto;">Your shopping cart is empty.</p>';
+                subtotalBox.innerText = '₹0';
+                return;
+            }
+
+            let subtotal = 0;
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+
+                const row = document.createElement('div');
+                row.className = 'cart-row-item';
+                row.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h5>${item.name}</h5>
+                        <div>
+                            ${item.selectedColor ? `<span class="cart-badge-tag">Color: ${item.selectedColor}</span>` : ''}
+                            ${item.selectedSize ? `<span class="cart-badge-tag">Size: ${item.selectedSize}</span>` : ''}
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--primary); font-weight:700;">₹${item.price} each</div>
+                        <div class="cart-qty-ctrl">
+                            <button class="qty-btn" onclick="updateCartQty(${i}, -1)">-</button>
+                            <span style="font-size:0.8rem; font-weight:700;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateCartQty(${i}, 1)">+</button>
+                        </div>
+                    </div>
+                    <span style="font-weight:800; font-size:0.85rem; color:#fff;">₹${itemTotal}</span>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            subtotalBox.innerText = `₹${subtotal}`;
+        }
+
+        function toggleCartDrawer(open) {
+            const backdrop = document.getElementById('cartBackdrop');
+            const drawer = document.getElementById('cartDrawer');
+            if (open) {
+                backdrop.classList.add('open');
+                drawer.classList.add('open');
+            } else {
+                backdrop.classList.remove('open');
+                drawer.classList.remove('open');
+            }
+        }
+
+        function executeWhatsAppCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            let total = 0;
+            let itemsText = "";
+            cart.forEach(c => {
+                const sub = c.price * c.qty;
+                total += sub;
+                let variantTags = '';
+                if (c.selectedColor) variantTags += ` [Color: ${c.selectedColor}]`;
+                if (c.selectedSize) variantTags += ` [Size: ${c.selectedSize}]`;
+                itemsText += `• ${c.name}${variantTags} (Qty: ${c.qty}) - ₹${sub}\n`;
+            });
+
+            let message = `*NEW ORDER - TRENDVIBE STORE*\n`;
+            message += `----------------------------\n`;
+            message += `${itemsText}`;
+            message += `----------------------------\n`;
+            message += `*Total Amount:* ₹${total}\n\n`;
+            message += `*Customer Details:*\n`;
+            message += `Name: ${name || 'Not provided'}\n`;
+            message += `Mobile: ${phone || 'Not provided'}\n`;
+            message += `Address: ${address || 'Not provided'}\n\n`;
+            message += `Please confirm my order delivery details!`;
+
+            const waUrl = `https://wa.me/${STORE_PHONE}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function executeUpiDirectPay() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const total = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+            const orderRef = "TV" + Math.floor(100000 + Math.random() * 900000);
+            const upiUrl = `upi://pay?pa=${STORE_UPI_VPA}&pn=TrendVibe%20Store&am=${total}&cu=INR&tn=Order%20${orderRef}`;
+            
+            window.location.href = upiUrl;
+        }
+
+        refreshAdminVisibility();
+        syncCartState();
+    </script>
 </body>
-          </html>
+                          </html>
